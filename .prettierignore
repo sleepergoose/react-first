@@ -1,0 +1,11 @@
+node_modules
+.eslintrc.cjs
+.prettierrc
+package.json
+pnpm-lock.yaml
+README.md
+vite.config.js
+
+# Ignore artifacts:
+build
+coverage
