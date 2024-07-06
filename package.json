@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "pnpm exec prettier . --write && eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "pnpm exec prettier . --write && eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "pnpm lint --fix",
     "preview": "vite preview",
-    "prettier": "pnpm exec prettier . --write"
+    "prettier": "pnpm exec prettier . --write",
+    "quality": "pnpm prettier && pnpm lint --fix"
   },
   "dependencies": {
     "react": "^18.3.1",
