@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import AuthService from '../../services/auth.service.jsx';
-import './RegisterPage.css';
+import './LoginPage.css';
 
-const RegisterPage = () => {
+const LoginPage = () => {
   const authService = new AuthService();
 
   const [requestState, setRequestState] = useState({
@@ -11,7 +11,6 @@ const RegisterPage = () => {
   });
 
   const [form, setForm] = useState({
-    name: { value: '' },
     email: { value: '' },
     password: { value: '' },
   });
@@ -31,9 +30,13 @@ const RegisterPage = () => {
     });
 
     try {
-      if (form && form.name.value && form.email.value && form.password.value) {
-        await authService.signUp({
-          name: form.name.value,
+      if (form && form.email.value && form.password.value) {
+        console.log({
+          email: form.email.value,
+          password: form.password.value,
+        });
+
+        await authService.signIn({
           email: form.email.value,
           password: form.password.value,
         });
@@ -44,7 +47,6 @@ const RegisterPage = () => {
         });
 
         setForm({
-          name: { value: '' },
           email: { value: '' },
           password: { value: '' },
         });
@@ -65,13 +67,7 @@ const RegisterPage = () => {
           borderRadius: '10px',
           margin: '25px auto'
         }}>
-          <h3>Register Form</h3>
-
-          <div className="m-3 w-100">
-            <label htmlFor="name" className="form-label">Name:</label>
-            <input type="text" name="name" className="form-control" placeholder="Name"
-              value={form.name.value} onChange={(e) => handleChange(e)} />
-          </div>
+          <h3>Login Form</h3>
 
           <div className="m-3 w-100">
             <label htmlFor="email" className="form-label">Email:</label>
@@ -85,13 +81,13 @@ const RegisterPage = () => {
               value={form.password.value} onChange={(e) => handleChange(e)} />
           </div>
 
-          {requestState.isPending && <button type="submit" disabled className="m-3 w-50 btn btn-primary">Registration...</button>}
-          {!requestState.isPending && <button type="submit" className="m-3 w-50 btn btn-primary">Register</button>}
+          {requestState.isPending && <button type="submit" disabled className="m-3 w-50 btn btn-primary">Signing in...</button>}
+          {!requestState.isPending && <button type="submit" className="m-3 w-50 btn btn-primary">Sign In</button>}
         </form>
 
         {requestState.error && (
           <div className="error-message">
-            <h4>An error occurred during registration flow.</h4>
+            <h4>An error occurred during signing in flow.</h4>
             <p>{requestState.error}</p>
           </div>
         )}
@@ -100,4 +96,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
