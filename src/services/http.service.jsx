@@ -14,41 +14,65 @@ class HttpService {
   }
 
   get = async (url) => {
-    const response = fetch(url, {
-      method: 'GET',
-      ...this.options,
+    return new Promise((res, rej) => {
+      fetch(url, {
+        method: 'GET',
+        ...this.options,
+      }).then((res => res.json()))
+        .then(data => {
+          res(data);
+        })
+        .catch(err => {
+          rej(err);
+        });
     });
-
-    return await response.json();
   };
 
   post = async (url, payload) => {
-    const response = fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      ...this.options,
+    return new Promise((res, rej) => {
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        ...this.options,
+      }).then((res => res.json()))
+        .then(data => {
+          res(data);
+        })
+        .catch(err => {
+          rej(err);
+        });
     });
-
-    return await response.json();
   };
 
   put = async (url, payload) => {
-    const response = fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      ...this.options,
+    return new Promise((res, rej) => {
+      fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        ...this.options,
+      }).then((res => res.json()))
+        .then(data => {
+          res(data);
+        })
+        .catch(err => {
+          rej(err);
+        });
     });
-
-    return await response.json();
   };
 
   delete = async (url) => {
-    const response = fetch(url, {
-      method: 'DELETE',
-      ...this.options,
+    return new Promise((res, rej) => {
+      fetch(url, {
+        method: 'DELETE',
+        ...this.options,
+      }).then((res => res.json()))
+        .then(data => {
+          res(data);
+        })
+        .catch(err => {
+          rej(err);
+        });
     });
-
-    return await response.json();
   };
 }
 
