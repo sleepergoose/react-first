@@ -32,7 +32,7 @@ class AuthService {
       throw new Error('Required registration parameter is missing.');
     }
 
-    const url = `${this.#apiUrl}/users/register`;
+    const url = `${this.#apiUrl}/auth/register`;
 
     try {
       const response = await this.#httpService.post(url, {
@@ -58,7 +58,7 @@ class AuthService {
       throw new Error('Required login parameter is missing.');
     }
 
-    const url = `${this.#apiUrl}/users/login`;
+    const url = `${this.#apiUrl}/auth/login`;
 
     try {
       const response = await this.#httpService.post(url, { email, password });
