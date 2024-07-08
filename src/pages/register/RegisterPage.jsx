@@ -140,7 +140,13 @@ const RegisterPage = () => {
           )}
 
           <div className="go-to-login">
-            <button type="button" className="login-btn" onClick={handleCreateAccountClick}>Already have account?</button>
+            <button
+              type="button"
+              className="login-btn"
+              onClick={handleCreateAccountClick}
+            >
+              Already have account?
+            </button>
           </div>
         </form>
       </div>

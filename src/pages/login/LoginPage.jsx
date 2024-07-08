@@ -123,7 +123,13 @@ const LoginPage = () => {
           )}
 
           <div className="no-account">
-            <button type="button" className="create-account-btn" onClick={handleCreateAccountClick}>Create account</button>
+            <button
+              type="button"
+              className="create-account-btn"
+              onClick={handleCreateAccountClick}
+            >
+              Create account
+            </button>
           </div>
         </form>
       </div>

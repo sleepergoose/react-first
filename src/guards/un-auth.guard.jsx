@@ -23,8 +23,10 @@ const UnAuthGuard = ({ component }) => {
     setAuthState(false);
   };
 
-  return (
-    authState ? <React.Fragment></React.Fragment> : <React.Fragment>{component}</React.Fragment>
+  return authState ? (
+    <React.Fragment></React.Fragment>
+  ) : (
+    <React.Fragment>{component}</React.Fragment>
   );
 };
 

@@ -9,7 +9,7 @@ const AuthGuard = ({ component }) => {
 
   useEffect(() => {
     checkAuthState();
-  }, [component]);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, [component]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkAuthState = () => {
     const state = authService.getAuthState();
@@ -23,8 +23,10 @@ const AuthGuard = ({ component }) => {
     setAuthState(true);
   };
 
-  return (
-    authState ? <React.Fragment>{component}</React.Fragment> : <React.Fragment></React.Fragment>
+  return authState ? (
+    <React.Fragment>{component}</React.Fragment>
+  ) : (
+    <React.Fragment></React.Fragment>
   );
 };
 
