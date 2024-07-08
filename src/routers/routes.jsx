@@ -3,20 +3,26 @@ import Root from '../Root.jsx';
 import ErrorPage from '../pages/error-page/ErrorPage.jsx';
 import RegisterPage from '../pages/register/RegisterPage.jsx';
 import LoginPage from '../pages/login/LoginPage.jsx';
+import HomePage from '../pages/home/HomePage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    index: true,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+    ],
   },
   {
     path: '/register',
-    element: <RegisterPage />
+    element: <RegisterPage />,
   },
   {
     path: '/login',
-    element: <LoginPage />
+    element: <LoginPage />,
   },
   {
     path: '*',

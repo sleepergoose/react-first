@@ -18,11 +18,12 @@ class HttpService {
       fetch(url, {
         method: 'GET',
         ...this.options,
-      }).then((res => res.json()))
-        .then(data => {
+      })
+        .then((res) => res.json())
+        .then((data) => {
           res(data);
         })
-        .catch(err => {
+        .catch((err) => {
           rej(err);
         });
     });
@@ -32,13 +33,14 @@ class HttpService {
     return new Promise((res, rej) => {
       fetch(url, {
         method: 'POST',
-        body: JSON.stringify(payload),
+        body: payload ? JSON.stringify(payload) : undefined,
         ...this.options,
-      }).then((res => res.json()))
-        .then(data => {
+      })
+        .then((res) => (res.status !== 204 ? res.json() : null))
+        .then((data) => {
           res(data);
         })
-        .catch(err => {
+        .catch((err) => {
           rej(err);
         });
     });
@@ -50,11 +52,12 @@ class HttpService {
         method: 'PUT',
         body: JSON.stringify(payload),
         ...this.options,
-      }).then((res => res.json()))
-        .then(data => {
+      })
+        .then((res) => res.json())
+        .then((data) => {
           res(data);
         })
-        .catch(err => {
+        .catch((err) => {
           rej(err);
         });
     });
@@ -65,11 +68,12 @@ class HttpService {
       fetch(url, {
         method: 'DELETE',
         ...this.options,
-      }).then((res => res.json()))
-        .then(data => {
+      })
+        .then((res) => res.json())
+        .then((data) => {
           res(data);
         })
-        .catch(err => {
+        .catch((err) => {
           rej(err);
         });
     });

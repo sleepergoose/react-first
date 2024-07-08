@@ -76,6 +76,10 @@ class AuthService {
   };
 
   logOut = async () => {
+    const url = `${this.#apiUrl}/auth/logout`;
+
+    await this.#httpService.post(url, null);
+
     localStorage.removeItem('accessToken');
     this.#authState = false;
   };
