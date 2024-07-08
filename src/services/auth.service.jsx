@@ -6,7 +6,6 @@ let instance = null;
 class AuthService {
   constructor() {
     if (!instance) {
-      this.#apiUrl = apiBaseUrl;
       this.#httpService = new HttpService();
       instance = this;
     } else {
@@ -15,16 +14,13 @@ class AuthService {
   }
 
   #httpService;
-  #apiUrl;
-  #authState = false;
-  #currentUser = null;
 
-  getAuthState = async () => {
-    return this.#authState;
+  getAuthState = () => {
+    return !!localStorage.getItem('accessToken');
   };
 
-  getCurrentuser = async () => {
-    return this.#currentUser;
+  getCurrentuser = () => {
+    return null;
   };
 
   signUp = async ({ name, email, password }) => {
@@ -32,7 +28,7 @@ class AuthService {
       throw new Error('Required registration parameter is missing.');
     }
 
-    const url = `${this.#apiUrl}/auth/register`;
+    const url = `${apiBaseUrl}/auth/register`;
 
     try {
       const response = await this.#httpService.post(url, {
@@ -43,13 +39,11 @@ class AuthService {
 
       if (response?.success) {
         localStorage.setItem('accessToken', response.accessToken);
-        this.#authState = true;
-        this.#currentUser = response.user;
       } else {
-        this.#authState = false;
+        localStorage.removeItem('accessToken');
       }
     } catch (error) {
-      this.#authState = false;
+      localStorage.removeItem('accessToken');
     }
   };
 
@@ -58,30 +52,25 @@ class AuthService {
       throw new Error('Required login parameter is missing.');
     }
 
-    const url = `${this.#apiUrl}/auth/login`;
+    const url = `${apiBaseUrl}/auth/login`;
 
     try {
       const response = await this.#httpService.post(url, { email, password });
 
       if (response?.success) {
         localStorage.setItem('accessToken', response.accessToken);
-        this.#authState = true;
-        this.#currentUser = response.user;
       } else {
-        this.#authState = false;
+        localStorage.removeItem('accessToken');
       }
     } catch (error) {
-      this.#authState = false;
+      localStorage.removeItem('accessToken');
     }
   };
 
   logOut = async () => {
-    const url = `${this.#apiUrl}/auth/logout`;
-
+    const url = `${apiBaseUrl}/auth/logout`;
     await this.#httpService.post(url, null);
-
     localStorage.removeItem('accessToken');
-    this.#authState = false;
   };
 }
 

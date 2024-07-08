@@ -4,6 +4,8 @@ import ErrorPage from '../pages/error-page/ErrorPage.jsx';
 import RegisterPage from '../pages/register/RegisterPage.jsx';
 import LoginPage from '../pages/login/LoginPage.jsx';
 import HomePage from '../pages/home/HomePage.jsx';
+import AuthGuard from '../guards/auth.guard.jsx';
+import UnAuthGuard from '../guards/un-auth.guard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -12,17 +14,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />,
+        element: <AuthGuard component={<HomePage />} />,
       },
     ],
   },
   {
     path: '/register',
-    element: <RegisterPage />,
+    element: <UnAuthGuard component={<RegisterPage />} />,
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: <UnAuthGuard component={<LoginPage />} />,
   },
   {
     path: '*',

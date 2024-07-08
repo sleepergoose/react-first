@@ -1,3 +1,19 @@
 .error-message {
   color: crimson;
 }
+
+.no-account {
+  width: 100%;
+  text-align: center;
+}
+
+.create-account-btn {
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: transparent;
+  color: #0b57d0;
+  &:hover {
+    text-decoration: underline;
+  }
+}
