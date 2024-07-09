@@ -16,11 +16,12 @@ class AuthService {
   #httpService;
 
   getAuthState = () => {
-    return !!localStorage.getItem('accessToken');
+    return !!localStorage.getItem('user');
   };
 
-  getCurrentuser = () => {
-    return null;
+  getCurrentUser = () => {
+    const userRawString = localStorage.getItem('user');
+    return userRawString ? JSON.parse(userRawString) : null;
   };
 
   signUp = async ({ name, email, password }) => {
@@ -38,12 +39,12 @@ class AuthService {
       });
 
       if (response?.success) {
-        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('user', JSON.stringify(response.user));
       } else {
-        localStorage.removeItem('accessToken');
+        localStorage.clear();
       }
     } catch (error) {
-      localStorage.removeItem('accessToken');
+      localStorage.clear();
     }
   };
 
@@ -58,19 +59,19 @@ class AuthService {
       const response = await this.#httpService.post(url, { email, password });
 
       if (response?.success) {
-        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('user', JSON.stringify(response.user));
       } else {
-        localStorage.removeItem('accessToken');
+        localStorage.clear();
       }
     } catch (error) {
-      localStorage.removeItem('accessToken');
+      localStorage.clear();
     }
   };
 
   logOut = async () => {
     const url = `${apiBaseUrl}/auth/logout`;
     await this.#httpService.post(url, null);
-    localStorage.removeItem('accessToken');
+    localStorage.clear();
   };
 }
 
