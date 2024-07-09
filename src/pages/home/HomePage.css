@@ -1,7 +1,6 @@
 .home-container {
+  padding: 50px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(100svh - 60px);
-  font-size: 36px;
+  flex-direction: column;
+  gap: 15px;
 }
