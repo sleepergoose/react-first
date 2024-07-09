@@ -61,6 +61,10 @@ const RegisterPage = () => {
     }
   };
 
+  const handleCreateAccountClick = () => {
+    navigate('/login');
+  };
+
   return (
     <>
       <div className="container">
@@ -127,14 +131,24 @@ const RegisterPage = () => {
               Register
             </button>
           )}
-        </form>
 
-        {requestState.error && (
-          <div className="error-message">
-            <h4>An error occurred during registration flow.</h4>
-            <p>{requestState.error}</p>
+          {requestState.error && (
+            <div className="error-message">
+              <h4>An error occurred during registration flow.</h4>
+              <p>{requestState.error}</p>
+            </div>
+          )}
+
+          <div className="go-to-login">
+            <button
+              type="button"
+              className="login-btn"
+              onClick={handleCreateAccountClick}
+            >
+              Already have account?
+            </button>
           </div>
-        )}
+        </form>
       </div>
     </>
   );

@@ -33,11 +33,6 @@ const LoginPage = () => {
 
     try {
       if (form && form.email.value && form.password.value) {
-        console.log({
-          email: form.email.value,
-          password: form.password.value,
-        });
-
         await authService.signIn({
           email: form.email.value,
           password: form.password.value,
@@ -61,6 +56,10 @@ const LoginPage = () => {
         error: error,
       });
     }
+  };
+
+  const handleCreateAccountClick = () => {
+    navigate('/register');
   };
 
   return (
@@ -115,14 +114,24 @@ const LoginPage = () => {
               Sign In
             </button>
           )}
-        </form>
 
-        {requestState.error && (
-          <div className="error-message">
-            <h4>An error occurred during signing in flow.</h4>
-            <p>{requestState.error}</p>
+          {requestState.error && (
+            <div className="error-message">
+              <h4>An error occurred during signing in flow.</h4>
+              <p>{requestState.error}</p>
+            </div>
+          )}
+
+          <div className="no-account">
+            <button
+              type="button"
+              className="create-account-btn"
+              onClick={handleCreateAccountClick}
+            >
+              Create account
+            </button>
           </div>
-        )}
+        </form>
       </div>
     </>
   );

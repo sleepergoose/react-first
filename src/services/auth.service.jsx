@@ -6,7 +6,6 @@ let instance = null;
 class AuthService {
   constructor() {
     if (!instance) {
-      this.#apiUrl = apiBaseUrl;
       this.#httpService = new HttpService();
       instance = this;
     } else {
@@ -15,16 +14,14 @@ class AuthService {
   }
 
   #httpService;
-  #apiUrl;
-  #authState = false;
-  #currentUser = null;
 
-  getAuthState = async () => {
-    return this.#authState;
+  getAuthState = () => {
+    return !!localStorage.getItem('user');
   };
 
-  getCurrentuser = async () => {
-    return this.#currentUser;
+  getCurrentUser = () => {
+    const userRawString = localStorage.getItem('user');
+    return userRawString ? JSON.parse(userRawString) : null;
   };
 
   signUp = async ({ name, email, password }) => {
@@ -32,7 +29,7 @@ class AuthService {
       throw new Error('Required registration parameter is missing.');
     }
 
-    const url = `${this.#apiUrl}/auth/register`;
+    const url = `${apiBaseUrl}/auth/register`;
 
     try {
       const response = await this.#httpService.post(url, {
@@ -42,14 +39,12 @@ class AuthService {
       });
 
       if (response?.success) {
-        localStorage.setItem('accessToken', response.accessToken);
-        this.#authState = true;
-        this.#currentUser = response.user;
+        localStorage.setItem('user', JSON.stringify(response.user));
       } else {
-        this.#authState = false;
+        localStorage.clear();
       }
     } catch (error) {
-      this.#authState = false;
+      localStorage.clear();
     }
   };
 
@@ -58,30 +53,25 @@ class AuthService {
       throw new Error('Required login parameter is missing.');
     }
 
-    const url = `${this.#apiUrl}/auth/login`;
+    const url = `${apiBaseUrl}/auth/login`;
 
     try {
       const response = await this.#httpService.post(url, { email, password });
 
       if (response?.success) {
-        localStorage.setItem('accessToken', response.accessToken);
-        this.#authState = true;
-        this.#currentUser = response.user;
+        localStorage.setItem('user', JSON.stringify(response.user));
       } else {
-        this.#authState = false;
+        localStorage.clear();
       }
     } catch (error) {
-      this.#authState = false;
+      localStorage.clear();
     }
   };
 
   logOut = async () => {
-    const url = `${this.#apiUrl}/auth/logout`;
-
+    const url = `${apiBaseUrl}/auth/logout`;
     await this.#httpService.post(url, null);
-
-    localStorage.removeItem('accessToken');
-    this.#authState = false;
+    localStorage.clear();
   };
 }
 

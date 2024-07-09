@@ -28,22 +28,45 @@
   gap: 10px;
 }
 
+.profile-menu-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  position: relative;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: left;
+  font-size: 0.8rem;
+  line-height: 0.9rem;
+
+  .name {
+    font-weight: bold;
+  }
+
+  .email {
+    color: #484848ee;
+  }
+}
+
 .avatar {
   border: 1px solid #48484860;
   border-radius: 50%;
   background: transparent;
-  position: relative;
-  img {
-    width: 30px;
-    height: 30px;
-  }
+  width: 30px;
+  height: 30px;
 }
 
-.avatar:hover .menu {
-  visibility: visible;
-  transition: all 0.2s ease-in;
-  transition-delay: 0.25s;
-  opacity: 1;
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: left;
 }
 
 .menu {
@@ -51,17 +74,15 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 90px;
+  width: 120px;
   right: 0;
   top: 37px;
   font-size: 1rem;
   border: 1px solid #48484830;
   border-radius: 3px;
   background: white;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.2s ease;
-  transition-delay: 0.3s;
+  transition: all 0.4s ease;
+  transition-delay: 0.2s;
   li {
     padding: 5px 15px;
     cursor: pointer;

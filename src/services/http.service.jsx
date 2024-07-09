@@ -6,7 +6,7 @@ class HttpService {
       credentials: 'include', // include, *same-origin, omit
       headers: {
         'Content-Type': 'application/json', // 'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: localStorage.getItem('accessToken'),
+        // Authorization: localStorage.getItem('accessToken'),
       },
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *client
