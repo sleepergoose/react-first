@@ -1,0 +1,29 @@
+.product-card {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 25px 10px 10px;
+  border-radius: 5px;
+  &:hover {
+    box-shadow: 1px 1px 4px 2px rgb(216 216 216 / 36%);
+    background: #fbfbfb;
+  }
+}
+
+.photo-block {
+  width: fit-content;
+  height: fit-content;
+  img {
+    height: 150px;
+    width: 150px;
+  }
+}
+
+.description-block {
+  width: 100%;
+
+  .product-name {
+    margin-bottom: 16px;
+  }
+}

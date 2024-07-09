@@ -9,3 +9,17 @@
   font-weight: 400;
   font-style: normal;
 }
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  border: 1px solid #48484820;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(199, 199, 199);
+  border: none;
+  border-radius: 20px;
+}
