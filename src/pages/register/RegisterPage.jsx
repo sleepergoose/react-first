@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import AuthService from '../../services/auth.service.jsx';
 import './RegisterPage.css';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
+import AuthService from '../../services/auth.service.jsx';
 
 const RegisterPage = () => {
   const authService = new AuthService();
@@ -12,43 +13,35 @@ const RegisterPage = () => {
     error: null,
   });
 
-  const [form, setForm] = useState({
-    name: { value: '' },
-    email: { value: '' },
-    password: { value: '' },
-  });
+  const { register, handleSubmit, getValues, setValue, trigger, formState } =
+    useForm();
+  const { errors, isSubmitting, isValid } = formState;
 
-  const handleChange = (e) => {
-    const _form = { ...form };
-    _form[e.target.name].value = e.target.value;
-    setForm(_form);
+  const onBlurHandle = (event) => {
+    const { name, value } = event.target;
+    setValue(name, value);
+    trigger(name, { shouldFocus: false });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async () => {
     setRequestState({
       isPending: true,
       error: null,
     });
 
+    const [name, email, password] = getValues();
+
     try {
-      if (form && form.name.value && form.email.value && form.password.value) {
+      if (name && email && password) {
         await authService.signUp({
-          name: form.name.value,
-          email: form.email.value,
-          password: form.password.value,
+          name: name,
+          email: email,
+          password: password,
         });
 
         setRequestState({
           isPending: false,
           error: null,
-        });
-
-        setForm({
-          name: { value: '' },
-          email: { value: '' },
-          password: { value: '' },
         });
 
         navigate('/');
@@ -65,7 +58,7 @@ const RegisterPage = () => {
     <>
       <div className="container">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="p-3 d-flex flex-column align-items-center shadow col-11 col-lg-6 col-xxl-4"
           style={{
             border: '1px solid #48484830',
@@ -75,7 +68,7 @@ const RegisterPage = () => {
         >
           <h3>Register Form</h3>
 
-          <div className="m-3 w-100">
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="name" className="form-label">
               Name:
             </label>
@@ -84,12 +77,23 @@ const RegisterPage = () => {
               name="name"
               className="form-control"
               placeholder="Name"
-              value={form.name.value}
-              onChange={(e) => handleChange(e)}
+              {...register('name', {
+                onBlur: (e) => onBlurHandle(e),
+                required: true,
+                minLength: 8,
+                maxLength: 32,
+              })}
             />
+            {errors?.name?.type === 'required' && (
+              <span role="alert">Name is required</span>
+            )}
+            {(errors?.name?.type === 'minLength' ||
+              errors?.name?.type === 'maxLength') && (
+              <span role="alert">Name must be 8 to 32 characters long</span>
+            )}
           </div>
 
-          <div className="m-3 w-100">
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="email" className="form-label">
               Email:
             </label>
@@ -98,12 +102,21 @@ const RegisterPage = () => {
               name="email"
               className="form-control "
               placeholder="Email Address"
-              value={form.email.value}
-              onChange={(e) => handleChange(e)}
+              {...register('email', {
+                onBlur: (e) => onBlurHandle(e),
+                required: true,
+                pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+              })}
             />
+            {errors?.email?.type === 'required' && (
+              <span role="alert">Email is required</span>
+            )}
+            {errors?.email?.type === 'pattern' && (
+              <span role="alert">Entered email has incorrect format</span>
+            )}
           </div>
 
-          <div className="m-3 w-100">
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="password" className="form-label">
               Password:
             </label>
@@ -112,9 +125,20 @@ const RegisterPage = () => {
               name="password"
               className="form-control"
               placeholder="Password"
-              value={form.password.value}
-              onChange={(e) => handleChange(e)}
+              {...register('password', {
+                onBlur: (e) => onBlurHandle(e),
+                required: true,
+                minLength: 8,
+                maxLength: 20,
+              })}
             />
+            {errors?.password?.type === 'required' && (
+              <span role="alert">Password is required</span>
+            )}
+            {(errors?.password?.type === 'minLength' ||
+              errors?.password?.type === 'maxLength') && (
+              <span role="alert">Password must be 8 to 32 characters long</span>
+            )}
           </div>
 
           {requestState.isPending && (
@@ -123,7 +147,11 @@ const RegisterPage = () => {
             </button>
           )}
           {!requestState.isPending && (
-            <button type="submit" className="m-3 w-50 btn btn-primary">
+            <button
+              type="submit"
+              className="m-3 w-50 btn btn-primary"
+              disabled={!isValid || isSubmitting}
+            >
               Register
             </button>
           )}

@@ -24,3 +24,7 @@ span[role='alert'] {
   color: red;
   font-size: 0.9rem;
 }
+
+.form-control-height {
+  height: 94px;
+}

@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import AuthService from '../../services/auth.service.jsx';
 import './LoginPage.css';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import AuthService from '../../services/auth.service.jsx';
 
 const LoginPage = () => {
   const authService = new AuthService();
@@ -67,12 +67,7 @@ const LoginPage = () => {
         >
           <h3>Login Form</h3>
 
-          <div
-            className="m-3 w-100 mb-0"
-            style={{
-              height: '94px',
-            }}
-          >
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="email" className="form-label">
               Email:
             </label>
@@ -87,20 +82,15 @@ const LoginPage = () => {
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
               })}
             />
-            {errors.email?.type === 'required' && (
+            {errors?.email?.type === 'required' && (
               <span role="alert">Email is required</span>
             )}
-            {errors.email?.type === 'pattern' && (
+            {errors?.email?.type === 'pattern' && (
               <span role="alert">Entered email has incorrect format</span>
             )}
           </div>
 
-          <div
-            className="m-3 w-100 mb-0"
-            style={{
-              height: '94px',
-            }}
-          >
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="password" className="form-label">
               Password:
             </label>
@@ -116,10 +106,10 @@ const LoginPage = () => {
                 maxLength: 20,
               })}
             />
-            {errors.password?.type === 'required' && (
+            {errors?.password?.type === 'required' && (
               <span role="alert">Password is required</span>
             )}
-            {(errors.password?.type === 'minLength' ||
+            {(errors?.password?.type === 'minLength' ||
               errors.password?.type === 'maxLength') && (
               <span role="alert">Password must be 8 to 20 characters long</span>
             )}
