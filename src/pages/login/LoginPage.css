@@ -13,7 +13,13 @@
   cursor: pointer;
   background: transparent;
   color: #0b57d0;
+  outline: none;
   &:hover {
     text-decoration: underline;
   }
+}
+
+span[role='alert'] {
+  color: red;
+  font-size: 0.9rem;
 }
