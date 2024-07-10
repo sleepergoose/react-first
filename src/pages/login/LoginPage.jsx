@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AuthService from '../../services/auth.service.jsx';
 import './LoginPage.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 const LoginPage = () => {
@@ -51,10 +51,6 @@ const LoginPage = () => {
     const { name, value } = event.target;
     setValue(name, value);
     trigger(name, { shouldFocus: false });
-  };
-
-  const handleCreateAccountClick = () => {
-    navigate('/register');
   };
 
   return (
@@ -152,13 +148,9 @@ const LoginPage = () => {
           )}
 
           <div className="no-account">
-            <button
-              type="button"
-              className="create-account-btn"
-              onClick={handleCreateAccountClick}
-            >
+            <Link to={'/register'} className="create-account-btn">
               Create account
-            </button>
+            </Link>
           </div>
         </form>
       </div>

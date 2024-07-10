@@ -13,6 +13,7 @@
   cursor: pointer;
   background: transparent;
   color: #0b57d0;
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
   }

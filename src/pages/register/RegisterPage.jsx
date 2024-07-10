@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AuthService from '../../services/auth.service.jsx';
 import './RegisterPage.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const RegisterPage = () => {
   const authService = new AuthService();
@@ -59,10 +59,6 @@ const RegisterPage = () => {
         error: error,
       });
     }
-  };
-
-  const handleCreateAccountClick = () => {
-    navigate('/login');
   };
 
   return (
@@ -140,13 +136,9 @@ const RegisterPage = () => {
           )}
 
           <div className="go-to-login">
-            <button
-              type="button"
-              className="login-btn"
-              onClick={handleCreateAccountClick}
-            >
+            <Link to={'/login'} className="login-btn">
               Already have account?
-            </button>
+            </Link>
           </div>
         </form>
       </div>
