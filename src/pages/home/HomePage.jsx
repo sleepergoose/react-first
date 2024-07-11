@@ -2,14 +2,24 @@ import './HomePage.css';
 import ProductList from '../../components/product-list/ProductList.jsx';
 import { useEffect, useState, useCallback } from 'react';
 import ProductService from '../../services/product.service.jsx';
-import { useSearchParams } from 'react-router-dom';
+import useQueryParams from '../../hooks/use-query-params.jsx';
 
 const HomePage = () => {
   const [productsData, setProductsData] = useState(null);
-  const [searchParams] = useSearchParams();
+  const { getNumericQueryParams } = useQueryParams();
 
-  const page = searchParams.get('page') ?? 1;
-  const limit = searchParams.get('limit') ?? 5;
+  const [page, limit] = getNumericQueryParams(
+    {
+      name: 'page',
+      lowLimit: 1,
+      upperLimit: 100
+    },
+    {
+      name: 'limit',
+      lowLimit: 5,
+      upperLimit: 20
+    },
+  );
 
   const fetchProducts = useCallback(async () => {
     const productService = new ProductService();
