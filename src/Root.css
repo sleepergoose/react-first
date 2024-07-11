@@ -9,3 +9,8 @@
     grid-template-columns: 270px 1fr;
   }
 }
+
+span[role='alert'] {
+  color: red;
+  font-size: 0.8rem;
+}

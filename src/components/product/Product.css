@@ -27,10 +27,16 @@
   .product-name {
     margin-bottom: 16px;
     font-size: 20px;
+    margin-bottom: 5px;
   }
 
   .product-manufacturer {
     font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .product-description {
+    font-size: 0.8rem;
   }
 }
 

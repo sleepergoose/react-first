@@ -13,15 +13,11 @@ const RegisterPage = () => {
     error: null,
   });
 
-  const { register, handleSubmit, getValues, setValue, trigger, formState } =
-    useForm();
+  const { register, handleSubmit, getValues, formState } = useForm({
+    reValidateMode: 'onBlur',
+    mode: 'all',
+  });
   const { errors, isSubmitting, isValid } = formState;
-
-  const onBlurHandle = (event) => {
-    const { name, value } = event.target;
-    setValue(name, value);
-    trigger(name, { shouldFocus: false });
-  };
 
   const onSubmit = async () => {
     setRequestState({
@@ -78,7 +74,6 @@ const RegisterPage = () => {
               className="form-control"
               placeholder="Name"
               {...register('name', {
-                onBlur: (e) => onBlurHandle(e),
                 required: true,
                 minLength: 8,
                 maxLength: 32,
@@ -103,7 +98,6 @@ const RegisterPage = () => {
               className="form-control "
               placeholder="Email Address"
               {...register('email', {
-                onBlur: (e) => onBlurHandle(e),
                 required: true,
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
               })}
@@ -126,7 +120,6 @@ const RegisterPage = () => {
               className="form-control"
               placeholder="Password"
               {...register('password', {
-                onBlur: (e) => onBlurHandle(e),
                 required: true,
                 minLength: 8,
                 maxLength: 20,

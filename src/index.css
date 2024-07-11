@@ -11,15 +11,15 @@
 }
 
 body::-webkit-scrollbar {
-  width: 8px;
+  width: 8px !important;
 }
 
 body::-webkit-scrollbar-track {
-  border: 1px solid #48484820;
+  border: 1px solid #48484820 !important;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: rgb(199, 199, 199);
-  border: none;
-  border-radius: 20px;
+  background-color: rgb(199, 199, 199) !important;
+  border: none !important;
+  border-radius: 20px !important;
 }

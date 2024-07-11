@@ -11,12 +11,12 @@ const Sidebar = () => {
         </div>
         <ul className="menu-list">
           <li>
-            <img src="src/assets/list.svg" alt="" />
+            <img src="src/assets/list.svg" alt="list icon" />
             <Link to={'/'}>Product List</Link>
           </li>
           <li>
-            <img src="src/assets/add.svg" alt="" />
-            <Link to={'/'}>Add product</Link>
+            <img src="src/assets/add.svg" alt="add icon" />
+            <Link to={'/add-product'}>Add product</Link>
           </li>
         </ul>
       </div>
