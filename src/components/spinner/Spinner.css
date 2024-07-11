@@ -1,0 +1,17 @@
+.loader {
+  width: 86px;
+  height: 86px;
+  border: 10px solid #d7d7d7;
+  border-top: 10px solid #48484870;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0edg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

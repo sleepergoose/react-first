@@ -1,0 +1,12 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.disabled-link {
+  pointer-events: none;
+}
+
+.page-link:focus {
+  box-shadow: none;
+}

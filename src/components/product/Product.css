@@ -5,8 +5,9 @@
   align-items: center;
   padding: 10px 25px 10px 10px;
   border-radius: 5px;
+  box-shadow: 1px 1px 4px 2px rgb(216 216 216 / 36%);
   &:hover {
-    box-shadow: 1px 1px 4px 2px rgb(216 216 216 / 36%);
+    box-shadow: 2px 2px 6px 3px rgb(216 216 216 / 50%);
     background: #fbfbfb;
   }
 }
@@ -15,8 +16,8 @@
   width: fit-content;
   height: fit-content;
   img {
-    height: 150px;
-    width: 150px;
+    height: 120px;
+    width: 120px;
   }
 }
 
@@ -25,5 +26,18 @@
 
   .product-name {
     margin-bottom: 16px;
+    font-size: 20px;
+  }
+
+  .product-manufacturer {
+    font-size: 14px;
+  }
+}
+
+.controls-block {
+  min-width: 150px;
+  text-align: right;
+  button {
+    font-size: 12px;
   }
 }
