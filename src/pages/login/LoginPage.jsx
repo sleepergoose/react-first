@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import AuthService from '../../services/auth.service.jsx';
 import './LoginPage.css';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import AuthService from '../../services/auth.service.jsx';
 
 const LoginPage = () => {
   const authService = new AuthService();
@@ -12,40 +13,28 @@ const LoginPage = () => {
     error: null,
   });
 
-  const [form, setForm] = useState({
-    email: { value: '' },
-    password: { value: '' },
-  });
+  const { register, handleSubmit, getValues, setValue, trigger, formState } =
+    useForm();
+  const { errors, isSubmitting, isValid } = formState;
 
-  const handleChange = (e) => {
-    const _form = { ...form };
-    _form[e.target.name].value = e.target.value;
-    setForm(_form);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async () => {
     setRequestState({
       isPending: true,
       error: null,
     });
 
+    const { email, password } = getValues();
+
     try {
-      if (form && form.email.value && form.password.value) {
+      if (email && password) {
         await authService.signIn({
-          email: form.email.value,
-          password: form.password.value,
+          email: email,
+          password: password,
         });
 
         setRequestState({
           isPending: false,
           error: null,
-        });
-
-        setForm({
-          email: { value: '' },
-          password: { value: '' },
         });
 
         navigate('/');
@@ -58,15 +47,17 @@ const LoginPage = () => {
     }
   };
 
-  const handleCreateAccountClick = () => {
-    navigate('/register');
+  const onBlur = (event) => {
+    const { name, value } = event.target;
+    setValue(name, value);
+    trigger(name, { shouldFocus: false });
   };
 
   return (
     <>
       <div className="container">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="p-3 d-flex flex-column align-items-center shadow col-11 col-lg-6 col-xxl-4"
           style={{
             border: '1px solid #48484830',
@@ -76,7 +67,7 @@ const LoginPage = () => {
         >
           <h3>Login Form</h3>
 
-          <div className="m-3 w-100">
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="email" className="form-label">
               Email:
             </label>
@@ -85,12 +76,21 @@ const LoginPage = () => {
               name="email"
               className="form-control "
               placeholder="Email Address"
-              value={form.email.value}
-              onChange={(e) => handleChange(e)}
+              {...register('email', {
+                onBlur: (e) => onBlur(e),
+                required: true,
+                pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+              })}
             />
+            {errors?.email?.type === 'required' && (
+              <span role="alert">Email is required</span>
+            )}
+            {errors?.email?.type === 'pattern' && (
+              <span role="alert">Entered email has incorrect format</span>
+            )}
           </div>
 
-          <div className="m-3 w-100">
+          <div className="m-3 w-100 mb-0 form-control-height">
             <label htmlFor="password" className="form-label">
               Password:
             </label>
@@ -99,9 +99,20 @@ const LoginPage = () => {
               name="password"
               className="form-control"
               placeholder="Password"
-              value={form.password.value}
-              onChange={(e) => handleChange(e)}
+              {...register('password', {
+                onBlur: (e) => onBlur(e),
+                required: true,
+                minLength: 8,
+                maxLength: 20,
+              })}
             />
+            {errors?.password?.type === 'required' && (
+              <span role="alert">Password is required</span>
+            )}
+            {(errors?.password?.type === 'minLength' ||
+              errors.password?.type === 'maxLength') && (
+              <span role="alert">Password must be 8 to 20 characters long</span>
+            )}
           </div>
 
           {requestState.isPending && (
@@ -110,7 +121,11 @@ const LoginPage = () => {
             </button>
           )}
           {!requestState.isPending && (
-            <button type="submit" className="m-3 w-50 btn btn-primary">
+            <button
+              type="submit"
+              disabled={!isValid || isSubmitting}
+              className="m-3 w-50 btn btn-primary"
+            >
               Sign In
             </button>
           )}
@@ -123,13 +138,9 @@ const LoginPage = () => {
           )}
 
           <div className="no-account">
-            <button
-              type="button"
-              className="create-account-btn"
-              onClick={handleCreateAccountClick}
-            >
+            <Link to={'/register'} className="create-account-btn">
               Create account
-            </button>
+            </Link>
           </div>
         </form>
       </div>

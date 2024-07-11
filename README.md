@@ -30,3 +30,12 @@ Inplemented `ESLint` and `Prettier`. To use them just execute the following comm
 ## How to run
 
 To run the app just execute the `pnpm dev` command (see the `package.json` file). But, of course, the app won't work properly without backend. 
+
+
+## Packages
+
+```shell
+pnpm install react-router-dom
+pnpm install react-hook-form
+```
+

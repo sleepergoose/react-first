@@ -13,7 +13,18 @@
   cursor: pointer;
   background: transparent;
   color: #0b57d0;
+  outline: none;
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
+}
+
+span[role='alert'] {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.form-control-height {
+  height: 94px;
 }
