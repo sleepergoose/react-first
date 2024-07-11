@@ -7,6 +7,7 @@ const ProductList = ({ productsData, page, limit }) => {
 
   return (
     <>
+      <h1 className="list-title">Product List</h1>
       <div className="product-list-container">
         <div className="list">
           {products?.length &&

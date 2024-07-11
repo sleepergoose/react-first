@@ -1,0 +1,11 @@
+.content {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  width: 100%;
+
+  @media (min-width: 1400px) {
+    width: 80%;
+    margin: 0 auto;
+    grid-template-columns: 270px 1fr;
+  }
+}

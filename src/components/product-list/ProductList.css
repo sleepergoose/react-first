@@ -4,6 +4,12 @@
   gap: 30px;
 }
 
+.list-title {
+  color: #484848;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #484848;
+}
+
 .list {
   display: flex;
   flex-direction: column;
