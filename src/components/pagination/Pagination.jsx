@@ -31,7 +31,9 @@ const Pagination = ({ data }) => {
             <li className="page-item" key={counter}>
               <Link
                 to={`/?page=${counter + 1}&limit=${limit}`}
-                className="page-link"
+                className={
+                  page === counter + 1 ? 'page-link active' : 'page-link'
+                }
               >
                 {counter + 1}
               </Link>
@@ -40,7 +42,9 @@ const Pagination = ({ data }) => {
 
         <li className="page-item">
           <Link
-            className={page < pagesAmount ? 'page-link' : 'page-link disabled-link'}
+            className={
+              page < pagesAmount ? 'page-link' : 'page-link disabled-link'
+            }
             to={`/?page=${page + 1}&limit=${limit}`}
             aria-label="Next"
           >

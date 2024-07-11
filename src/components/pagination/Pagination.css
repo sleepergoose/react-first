@@ -6,3 +6,7 @@
 .disabled-link {
   pointer-events: none;
 }
+
+.page-link:focus {
+  box-shadow: none;
+}
