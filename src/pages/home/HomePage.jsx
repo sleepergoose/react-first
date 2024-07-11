@@ -2,17 +2,20 @@ import './HomePage.css';
 import ProductList from '../../components/product-list/ProductList.jsx';
 import { useEffect, useState, useCallback } from 'react';
 import ProductService from '../../services/product.service.jsx';
+import { useSearchParams } from 'react-router-dom';
 
 const HomePage = () => {
-  const [products, setProducts] = useState(null);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [productsData, setProductsData] = useState(null);
+  const [searchParams] = useSearchParams();
+
+  const page = searchParams.get('page') ?? 1;
+  const limit = searchParams.get('limit') ?? 5;
 
   const fetchProducts = useCallback(async () => {
     const productService = new ProductService();
     const data = await productService.getPaginatedProducts(page, limit);
-    setProducts(data);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    setProductsData(data);
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     fetchProducts();
@@ -20,7 +23,11 @@ const HomePage = () => {
 
   return (
     <>
-      <ProductList products={products} />
+      <div className="home-container">
+        {productsData && (
+          <ProductList productsData={productsData} page={page} limit={limit} />
+        )}
+      </div>
     </>
   );
 };

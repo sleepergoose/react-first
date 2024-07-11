@@ -17,9 +17,14 @@ const Product = ({ product }) => {
             <p className="product-manufacturer">
               Manufacturer: <b>{product?.manufacturer}</b>
             </p>
+          </div>
+          <div className="controls-block">
             <p className="product-price">
-              Price: <b>{product?.price}</b> UAH
+              <b>{product?.price}</b> UAH
             </p>
+            <button type="button" className="btn btn-primary">
+              See details
+            </button>
           </div>
         </div>
       )}
