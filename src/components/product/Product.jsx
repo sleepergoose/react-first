@@ -17,6 +17,9 @@ const Product = ({ product }) => {
             <p className="product-manufacturer">
               Manufacturer: <b>{product?.manufacturer}</b>
             </p>
+            <span className="product-description">
+              {product?.shortDescription}
+            </span>
           </div>
           <div className="controls-block">
             <p className="product-price">

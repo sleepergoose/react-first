@@ -13,6 +13,10 @@ class ProductService {
       `${apiBaseUrl}/products/paginated?page=${page}&limit=${limit}`
     );
   };
+
+  createProduct = async (product) => {
+    return await this.#httpService.post(`${apiBaseUrl}/products/`, product);
+  };
 }
 
 export default ProductService;

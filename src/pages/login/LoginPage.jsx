@@ -13,8 +13,10 @@ const LoginPage = () => {
     error: null,
   });
 
-  const { register, handleSubmit, getValues, setValue, trigger, formState } =
-    useForm();
+  const { register, handleSubmit, getValues, formState } = useForm({
+    reValidateMode: 'onBlur',
+    mode: 'all',
+  });
   const { errors, isSubmitting, isValid } = formState;
 
   const onSubmit = async () => {
@@ -47,18 +49,12 @@ const LoginPage = () => {
     }
   };
 
-  const onBlur = (event) => {
-    const { name, value } = event.target;
-    setValue(name, value);
-    trigger(name, { shouldFocus: false });
-  };
-
   return (
     <>
       <div className="container">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-3 d-flex flex-column align-items-center shadow col-11 col-lg-6 col-xxl-4"
+          className="p-4 d-flex flex-column align-items-center shadow col-11 col-lg-6 col-xxl-4"
           style={{
             border: '1px solid #48484830',
             borderRadius: '10px',
@@ -77,7 +73,6 @@ const LoginPage = () => {
               className="form-control "
               placeholder="Email Address"
               {...register('email', {
-                onBlur: (e) => onBlur(e),
                 required: true,
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
               })}
@@ -100,7 +95,6 @@ const LoginPage = () => {
               className="form-control"
               placeholder="Password"
               {...register('password', {
-                onBlur: (e) => onBlur(e),
                 required: true,
                 minLength: 8,
                 maxLength: 20,

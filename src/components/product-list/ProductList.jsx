@@ -7,15 +7,22 @@ const ProductList = ({ productsData, page, limit }) => {
 
   return (
     <>
+      <h1 className="list-title">Product List</h1>
       <div className="product-list-container">
         <div className="list">
-          {products?.length &&
+          {products &&
+            products.length > 0 &&
             products.map((product) => (
               <Product product={product} key={product._id} />
             ))}
+          {!(products && products.length > 0) && (
+            <div>
+              There are no products yet or you submitted an incorrect request.
+            </div>
+          )}
         </div>
         <div className="list-paginator">
-          {products?.length && <Pagination data={{ page, limit, count }} />}
+          {products?.length > 0 && <Pagination data={{ page, limit, count }} />}
         </div>
       </div>
     </>
