@@ -54,7 +54,7 @@ const LoginPage = () => {
       <div className="container">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-3 d-flex flex-column align-items-center shadow col-11 col-lg-6 col-xxl-4"
+          className="p-4 d-flex flex-column align-items-center shadow col-11 col-lg-6 col-xxl-4"
           style={{
             border: '1px solid #48484830',
             borderRadius: '10px',

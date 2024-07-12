@@ -1,7 +1,13 @@
 import './AddProductPage.css';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import ProductService from '../../services/product.service.jsx';
 
 const AddProductPage = () => {
+  const navigate = useNavigate();
+  const productService = new ProductService();
+
   const { register, handleSubmit, getValues, formState } = useForm({
     reValidateMode: 'onBlur',
     mode: 'all',
@@ -9,9 +15,35 @@ const AddProductPage = () => {
 
   const { errors, isSubmitting, isValid } = formState;
 
+  const [requestState, setRequestState] = useState({
+    isPending: false,
+    error: null,
+  });
+
   const onSubmit = async () => {
+    setRequestState({
+      isPending: true,
+      error: null,
+    });
+
     const values = getValues();
     console.log(values);
+
+    try {
+      const createdProduct = await productService.createProduct(values);
+
+      setRequestState({
+        isPending: false,
+        error: null,
+      });
+
+      navigate('/');
+    } catch (error) {
+      setRequestState({
+        isPending: false,
+        error: error,
+      });
+    }
   };
 
   return (
@@ -41,10 +73,10 @@ const AddProductPage = () => {
           )}
           {(errors?.name?.type === 'minLength' ||
             errors?.name?.type === 'maxLength') && (
-              <span role="alert">
-                Product name must be 3 to 128 characters long
-              </span>
-            )}
+            <span role="alert">
+              Product name must be 3 to 128 characters long
+            </span>
+          )}
         </div>
 
         <div className="height">
@@ -70,10 +102,10 @@ const AddProductPage = () => {
           )}
           {(errors?.manufacturer?.type === 'minLength' ||
             errors?.manufacturer?.type === 'maxLength') && (
-              <span role="alert">
-                Manufacturer name must be 3 to 64 characters long
-              </span>
-            )}
+            <span role="alert">
+              Manufacturer name must be 3 to 64 characters long
+            </span>
+          )}
         </div>
 
         <div className="height">
@@ -92,6 +124,7 @@ const AddProductPage = () => {
               },
               min: 0,
               max: 1000000,
+              valueAsNumber: true,
             })}
           />
           {errors?.price?.type === 'required' && (
@@ -140,16 +173,18 @@ const AddProductPage = () => {
           )}
           {(errors?.shortDescription?.type === 'minLength' ||
             errors?.shortDescription?.type === 'maxLength') && (
-              <span role="alert">
-                Description must be 10 to 256 characters long
-              </span>
-            )}
+            <span role="alert">
+              Description must be 10 to 256 characters long
+            </span>
+          )}
         </div>
 
-        {/* <div className="add-tech-field">
-          <img src="src/assets/plus-circle.svg" alt="add field" />
-          <span>Add Tech Field</span>
-        </div> */}
+        {requestState.error && (
+          <div className="error-message">
+            <h4>An error occurred during registration flow.</h4>
+            <p>{requestState.error}</p>
+          </div>
+        )}
 
         <button
           type="submit"

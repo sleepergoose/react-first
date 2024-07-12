@@ -25,7 +25,7 @@ const RegisterPage = () => {
       error: null,
     });
 
-    const [name, email, password] = getValues();
+    const { name, email, password } = getValues();
 
     try {
       if (name && email && password) {
@@ -75,7 +75,7 @@ const RegisterPage = () => {
               placeholder="Name"
               {...register('name', {
                 required: true,
-                minLength: 8,
+                minLength: 3,
                 maxLength: 32,
               })}
             />
@@ -84,7 +84,7 @@ const RegisterPage = () => {
             )}
             {(errors?.name?.type === 'minLength' ||
               errors?.name?.type === 'maxLength') && (
-              <span role="alert">Name must be 8 to 32 characters long</span>
+              <span role="alert">Name must be 3 to 32 characters long</span>
             )}
           </div>
 
