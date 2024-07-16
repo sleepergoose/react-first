@@ -2,7 +2,7 @@ import './HomePage.css';
 import { useEffect, useState, useCallback } from 'react';
 import useQueryParams from '../../hooks/use-query-params.jsx';
 import ProductService from '../../services/product.service.jsx';
-import ProductList from '../../components/product-list/ProductList.jsx';
+import ProductList from './components/product-list/ProductList.jsx';
 import Spinner from '../../components/spinner/Spinner.jsx';
 
 const HomePage = () => {
@@ -30,7 +30,7 @@ const HomePage = () => {
     const data = await productService.getPaginatedProducts(page, limit);
     setProductsData(data);
     setIsPending(false);
-  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, limit]);
 
   useEffect(() => {
     fetchProducts();

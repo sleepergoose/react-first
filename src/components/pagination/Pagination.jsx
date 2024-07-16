@@ -11,7 +11,7 @@ const Pagination = ({ data }) => {
     const _count = Math.ceil(count / limit);
     setPagesAmount(_count);
     setArray(Array.from(Array(_count).keys()));
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [count, limit]);
 
   return (
     <>
