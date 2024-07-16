@@ -3,46 +3,64 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import ProductService from '../../services/product.service.jsx';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const AddProductPage = () => {
+  const horizontal = 'left';
+  const vertical = 'bottom';
+
   const navigate = useNavigate();
   const productService = new ProductService();
+  const [openSnackbar, setOpenSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
 
-  const { register, handleSubmit, getValues, formState } = useForm({
+  const handleOpenSnackbarClick = (message, severity = 'success') => {
+    setOpenSnackbar({
+      open: true,
+      message: message,
+      severity: severity,
+    });
+  };
+
+  const handleSnackbarClick = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
+  const { register, handleSubmit, getValues, reset, formState } = useForm({
     reValidateMode: 'onBlur',
     mode: 'all',
   });
 
   const { errors, isSubmitting, isValid } = formState;
 
-  const [requestState, setRequestState] = useState({
-    isPending: false,
-    error: null,
-  });
-
   const onSubmit = async () => {
-    setRequestState({
-      isPending: true,
-      error: null,
-    });
-
     const values = getValues();
-    console.log(values);
 
     try {
-      const createdProduct = await productService.createProduct(values);
+      await productService.createProduct(values);
 
-      setRequestState({
-        isPending: false,
-        error: null,
+      handleOpenSnackbarClick('New product is added successfully!');
+
+      reset({
+        name: '',
+        manufacturer: '',
+        price: 0,
+        photoUrl: '',
+        shortDescription: '',
       });
-
-      navigate('/');
     } catch (error) {
-      setRequestState({
-        isPending: false,
-        error: error,
-      });
+      handleOpenSnackbarClick(
+        'Something went wrong while a new product has been adding!',
+        'error'
+      );
     }
   };
 
@@ -179,21 +197,42 @@ const AddProductPage = () => {
           )}
         </div>
 
-        {requestState.error && (
-          <div className="error-message">
-            <h4>An error occurred during registration flow.</h4>
-            <p>{requestState.error}</p>
-          </div>
+        {!isSubmitting && (
+          <button
+            type="submit"
+            disabled={!isValid || isSubmitting}
+            className="m-3 w-50 btn btn-primary"
+          >
+            Add Product
+          </button>
         )}
 
-        <button
-          type="submit"
-          disabled={!isValid || isSubmitting}
-          className="m-3 w-50 btn btn-primary"
-        >
-          Add Product
-        </button>
+        {isSubmitting && (
+          <button
+            type="submit"
+            disabled={!isValid || isSubmitting}
+            className="m-3 w-50 btn btn-primary"
+          >
+            Product adding...
+          </button>
+        )}
       </form>
+
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={openSnackbar.open}
+        onClose={handleSnackbarClick}
+        key={vertical + horizontal}
+        autoHideDuration={5000}
+      >
+        <Alert
+          onClose={handleSnackbarClick}
+          severity={openSnackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {openSnackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

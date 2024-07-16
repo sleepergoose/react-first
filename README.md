@@ -37,5 +37,9 @@ To run the app just execute the `pnpm dev` command (see the `package.json` file)
 ```shell
 pnpm install react-router-dom
 pnpm install react-hook-form
+
+pnpm add @mui/material @emotion/react @emotion/styled
+pnpm add @fontsource/roboto
+pnpm add @mui/icons-material
 ```
 

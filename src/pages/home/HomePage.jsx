@@ -40,8 +40,8 @@ const HomePage = () => {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    marginTop: '-43px',
-    marginLeft: '-43px',
+    margin: '-43px',
+    marginLeft: '43px',
   };
 
   return (
