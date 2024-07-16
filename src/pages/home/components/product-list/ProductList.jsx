@@ -1,6 +1,7 @@
 import './ProductList.css';
 import Product from '../product/Product.jsx';
-import Pagination from '../../components/pagination/Pagination.jsx';
+import Pagination from '../../../../components/pagination/Pagination.jsx';
+import { isEmpty } from 'lodash';
 
 const ProductList = ({ productsData, page, limit }) => {
   const { count, products } = productsData;
@@ -10,12 +11,11 @@ const ProductList = ({ productsData, page, limit }) => {
       <h1 className="list-title">Product List</h1>
       <div className="product-list-container">
         <div className="list">
-          {products &&
-            products.length > 0 &&
+          {!isEmpty(products) &&
             products.map((product) => (
               <Product product={product} key={product._id} />
             ))}
-          {!(products && products.length > 0) && (
+          {isEmpty(products) && (
             <div>
               There are no products yet or you submitted an incorrect request.
             </div>

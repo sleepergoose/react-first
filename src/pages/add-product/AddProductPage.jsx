@@ -1,7 +1,6 @@
 import './AddProductPage.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import ProductService from '../../services/product.service.jsx';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -10,7 +9,6 @@ const AddProductPage = () => {
   const horizontal = 'left';
   const vertical = 'bottom';
 
-  const navigate = useNavigate();
   const productService = new ProductService();
   const [openSnackbar, setOpenSnackbar] = useState({
     open: false,

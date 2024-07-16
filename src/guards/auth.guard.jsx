@@ -9,7 +9,7 @@ const AuthGuard = ({ component }) => {
 
   useEffect(() => {
     checkAuthState();
-  }, [component]); // eslint-disable-line react-hooks/exhaustive-deps
+  });
 
   const checkAuthState = () => {
     const state = authService.getAuthState();
