@@ -4,6 +4,8 @@ import useQueryParams from '../../hooks/use-query-params.jsx';
 import productService from '../../services/product.service.js';
 import ProductList from './components/product-list/ProductList.jsx';
 import Spinner from '../../components/spinner/Spinner.jsx';
+import Sort from '../../components/sort/Sort.jsx';
+import { sortOptions } from './components/filter/models/sort-options.js';
 
 const HomePage = () => {
   const [productsData, setProductsData] = useState(null);
@@ -46,6 +48,7 @@ const HomePage = () => {
   return (
     <>
       <div className="home-container">
+        <Sort sortOptions={sortOptions} />
         {isPending && (
           <div className="spinner">
             <Spinner style={spinnerStyle} />
