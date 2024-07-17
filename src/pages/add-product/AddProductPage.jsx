@@ -1,7 +1,7 @@
 import './AddProductPage.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ProductService from '../../services/product.service.jsx';
+import productService from '../../services/product.service.js';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
@@ -9,7 +9,6 @@ const AddProductPage = () => {
   const horizontal = 'left';
   const vertical = 'bottom';
 
-  const productService = new ProductService();
   const [openSnackbar, setOpenSnackbar] = useState({
     open: false,
     message: '',

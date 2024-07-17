@@ -8,7 +8,7 @@ function useQueryParams() {
     const paramArray = [];
 
     for (let i = 0; i < paramAmount; i++) {
-      let value = +searchParams.get(params[i].name);
+      let value = Number(searchParams.get(params[i].name));
 
       value = isNaN(value) ? 1 : value;
       value = value < params[i].lowLimit ? params[i].lowLimit : value;

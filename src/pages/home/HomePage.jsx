@@ -1,7 +1,7 @@
 import './HomePage.css';
 import { useEffect, useState, useCallback } from 'react';
 import useQueryParams from '../../hooks/use-query-params.jsx';
-import ProductService from '../../services/product.service.jsx';
+import productService from '../../services/product.service.js';
 import ProductList from './components/product-list/ProductList.jsx';
 import Spinner from '../../components/spinner/Spinner.jsx';
 
@@ -26,7 +26,6 @@ const HomePage = () => {
 
   const fetchProducts = useCallback(async () => {
     setIsPending(true);
-    const productService = new ProductService();
     const data = await productService.getPaginatedProducts(page, limit);
     setProductsData(data);
     setIsPending(false);

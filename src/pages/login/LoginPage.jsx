@@ -2,7 +2,7 @@ import './LoginPage.css';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import AuthService from '../../services/auth.service.jsx';
+import AuthService from '../../services/auth.service.js';
 
 const LoginPage = () => {
   const authService = new AuthService();

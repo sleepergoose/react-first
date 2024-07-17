@@ -1,5 +1,5 @@
 import './MainHeader.css';
-import AuthService from '../../services/auth.service.jsx';
+import AuthService from '../../services/auth.service.js';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
