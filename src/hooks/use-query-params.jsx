@@ -20,8 +20,41 @@ function useQueryParams() {
     return paramArray;
   };
 
+  const getQueryParams = (...params) => {
+    const paramArray = [];
+
+    params.forEach((param) => {
+      const rawParam = searchParams.get(param.name);
+
+      switch (param.type) {
+        case 'numeric': {
+          let value = Number(rawParam);
+          value = isNaN(value) ? 1 : value;
+          value = value < param.lowLimit ? param.lowLimit : value;
+          value = value > param.upperLimit ? param.upperLimit : value;
+
+          paramArray.push(value);
+          break;
+        }
+        case 'enum': {
+          if (param.values.some((p) => p === rawParam)) {
+            paramArray.push(rawParam);
+          } else {
+            paramArray.push(param.values[0]);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    });
+
+    return paramArray;
+  };
+
   return {
     getNumericQueryParams,
+    getQueryParams,
   };
 }
 

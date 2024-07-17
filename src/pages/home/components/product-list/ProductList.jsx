@@ -2,12 +2,37 @@ import './ProductList.css';
 import Product from '../product/Product.jsx';
 import Pagination from '../../../../components/pagination/Pagination.jsx';
 import { isEmpty } from 'lodash';
+import Sort from '../../../../components/sort/Sort.jsx';
+import { sortOptions } from '../../components/filter/models/sort-options.js';
 
-const ProductList = ({ productsData, page, limit }) => {
+const ProductList = ({
+  productsData,
+  page,
+  limit,
+  sortOption,
+  handleEvents,
+}) => {
   const { count, products } = productsData;
+
+  const handlePageClick = (clickedPage) => {
+    if (handleEvents) {
+      handleEvents(clickedPage, sortOption);
+    }
+  };
+
+  const handleSort = (option) => {
+    if (handleEvents) {
+      handleEvents(page, option);
+    }
+  };
 
   return (
     <>
+      <Sort
+        handleChange={handleSort}
+        currentValue={sortOption}
+        sortOptions={sortOptions}
+      />
       <h1 className="list-title">Product List</h1>
       <div className="product-list-container">
         <div className="list">
@@ -22,7 +47,12 @@ const ProductList = ({ productsData, page, limit }) => {
           )}
         </div>
         <div className="list-paginator">
-          {products?.length > 0 && <Pagination data={{ page, limit, count }} />}
+          {!isEmpty(products) && (
+            <Pagination
+              data={{ page, limit, count }}
+              handlePageClick={handlePageClick}
+            />
+          )}
         </div>
       </div>
     </>

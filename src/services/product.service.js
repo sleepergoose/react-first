@@ -2,9 +2,9 @@ import httpService from './http.service.js';
 import { apiBaseUrl } from '../constants/environment.js';
 
 class ProductService {
-  static getPaginatedProducts = async (page, limit) => {
+  static getPaginatedProducts = async (page, limit, sortOption = 'priceUp') => {
     return await httpService.get(
-      `${apiBaseUrl}/products/paginated?page=${page}&limit=${limit}`
+      `${apiBaseUrl}/products/paginated?page=${page}&limit=${limit}&sortOption=${sortOption}`
     );
   };
 

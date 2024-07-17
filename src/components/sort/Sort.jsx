@@ -5,12 +5,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useState, memo } from 'react';
 
-const SortComponent = ({ handleChange, sortOptions }) => {
+const SortComponent = ({ handleChange, currentValue, sortOptions }) => {
   if (!sortOptions) {
     throw new Error('Sort options are not specified.');
   }
 
-  const [sortOptionValue, setSortOptionValue] = useState(sortOptions[0].value);
+  const [sortOptionValue, setSortOptionValue] = useState(
+    currentValue ?? sortOptions[0].value
+  );
 
   const handleSelectChange = (event) => {
     const newValue = event.target.value;
