@@ -4,10 +4,20 @@ import { useForm } from 'react-hook-form';
 import productService from '../../services/product.service.js';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { useFetchData } from '../../hooks/use-fetch-data.jsx';
+import { isEmpty } from 'lodash';
+import { snakeCaseToNormalString } from '../../helpers/case-transform.js';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
 const AddProductPage = () => {
   const horizontal = 'left';
   const vertical = 'bottom';
+
+  const [productTimeValue, setProductTypeValue] = useState('');
+  const [types] = useFetchData('/products/types');
 
   const [openSnackbar, setOpenSnackbar] = useState({
     open: false,
@@ -31,10 +41,11 @@ const AddProductPage = () => {
     setOpenSnackbar(false);
   };
 
-  const { register, handleSubmit, getValues, reset, formState } = useForm({
-    reValidateMode: 'onBlur',
-    mode: 'all',
-  });
+  const { register, handleSubmit, getValues, setValue, reset, formState } =
+    useForm({
+      reValidateMode: 'onBlur',
+      mode: 'all',
+    });
 
   const { errors, isSubmitting, isValid } = formState;
 
@@ -59,6 +70,12 @@ const AddProductPage = () => {
         'error'
       );
     }
+  };
+
+  const onChangeType = (event) => {
+    const newValue = event.target.value;
+    setProductTypeValue(newValue);
+    setValue('type', newValue);
   };
 
   return (
@@ -123,33 +140,68 @@ const AddProductPage = () => {
           )}
         </div>
 
-        <div className="height">
-          <label htmlFor="price" className="form-label">
-            Price:
-          </label>
-          <input
-            type="number"
-            name="price"
-            className="form-control"
-            placeholder="Price, UAH"
-            {...register('price', {
-              required: {
-                value: true,
-                message: 'This field is required',
-              },
-              min: 0,
-              max: 1000000,
-              valueAsNumber: true,
-            })}
-          />
-          {errors?.price?.type === 'required' && (
-            <span role="alert">{errors.price.message}</span>
-          )}
-          {(errors?.price?.type === 'min' || errors?.price?.type === 'max') && (
-            <span role="alert">
-              The price should be from 0 to 1,000,000 UAH
-            </span>
-          )}
+        <div className="grouped-controls">
+          <div className="height">
+            <label htmlFor="price" className="form-label">
+              Price:
+            </label>
+            <input
+              type="number"
+              name="price"
+              className="form-control"
+              placeholder="Price, UAH"
+              {...register('price', {
+                required: {
+                  value: true,
+                  message: 'This field is required',
+                },
+                min: 0,
+                max: 1000000,
+                valueAsNumber: true,
+              })}
+            />
+            {errors?.price?.type === 'required' && (
+              <span role="alert">{errors.price.message}</span>
+            )}
+            {(errors?.price?.type === 'min' ||
+              errors?.price?.type === 'max') && (
+              <span role="alert">
+                The price should be from 0 to 1,000,000 UAH
+              </span>
+            )}
+          </div>
+
+          <div className="height">
+            <label htmlFor="type" className="form-label">
+              Product Type:
+            </label>
+            <FormControl fullWidth size="small">
+              <InputLabel id="type-select-label">Product Type</InputLabel>
+              <Select
+                labelId="type-select-label"
+                value={productTimeValue}
+                label="Product Type"
+                name="type"
+                {...register('type', {
+                  required: {
+                    value: true,
+                    message: 'This field is required',
+                  },
+                  onChange: (e) => onChangeType(e),
+                })}
+              >
+                {!isEmpty(types) &&
+                  types.map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {snakeCaseToNormalString(type)}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            {errors?.type?.type === 'required' && (
+              <span role="alert">{errors.type.message}</span>
+            )}
+          </div>
         </div>
 
         <div className="height">
