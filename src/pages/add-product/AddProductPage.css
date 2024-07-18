@@ -24,18 +24,6 @@ form {
   }
 }
 
-.textarea-control {
-  padding-bottom: 20px;
-}
-
-.height {
-  min-height: 105px;
-}
-
-.error-message {
-  color: crimson;
-}
-
 .grouped-controls {
   display: flex;
   align-items: center;

@@ -1,22 +1,17 @@
 import './AddProductPage.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import productService from '../../services/product.service.js';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useFetchData } from '../../hooks/use-fetch-data.jsx';
-import { isEmpty } from 'lodash';
-import { snakeCaseToNormalString } from '../../helpers/case-transform.js';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import FormInput from '../../components/form/FormInput.jsx';
+import FormSelect from '../../components/form/FormSelect.jsx';
+import productService from '../../services/product.service.js';
 
 const AddProductPage = () => {
   const horizontal = 'left';
   const vertical = 'bottom';
 
-  const [productTimeValue, setProductTypeValue] = useState('');
   const [types] = useFetchData('/products/types');
 
   const [openSnackbar, setOpenSnackbar] = useState({
@@ -41,11 +36,10 @@ const AddProductPage = () => {
     setOpenSnackbar(false);
   };
 
-  const { register, handleSubmit, getValues, setValue, reset, formState } =
-    useForm({
-      reValidateMode: 'onBlur',
-      mode: 'all',
-    });
+  const { register, handleSubmit, getValues, reset, formState } = useForm({
+    reValidateMode: 'onBlur',
+    mode: 'all',
+  });
 
   const { errors, isSubmitting, isValid } = formState;
 
@@ -72,179 +66,124 @@ const AddProductPage = () => {
     }
   };
 
-  const onChangeType = (event) => {
-    const newValue = event.target.value;
-    setProductTypeValue(newValue);
-    setValue('type', newValue);
-  };
-
   return (
     <div className="add-product-container">
       <h1 className="list-title">Add Product</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="height">
-          <label htmlFor="name" className="form-label">
-            Product Name:
-          </label>
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            placeholder="Product Name"
-            {...register('name', {
-              required: {
-                value: true,
-                message: 'This field is required',
-              },
-              minLength: 3,
-              maxLength: 128,
-            })}
-          />
-          {errors?.name?.type === 'required' && (
-            <span role="alert">{errors.name.message}</span>
-          )}
-          {(errors?.name?.type === 'minLength' ||
-            errors?.name?.type === 'maxLength') && (
-            <span role="alert">
-              Product name must be 3 to 128 characters long
-            </span>
-          )}
-        </div>
+        <FormInput
+          label="Product Name"
+          name="name"
+          variant="standard"
+          type="text"
+          errors={errors}
+          register={register('name', {
+            required: {
+              value: true,
+            },
+            minLength: {
+              value: 3,
+              message: '\'Product Name\' must be more than 3 characters long',
+            },
+            maxLength: {
+              value: 128,
+              message: '\'Product Name\' must be less than 128 characters long',
+            },
+          })}
+        />
 
-        <div className="height">
-          <label htmlFor="manufacturer" className="form-label">
-            Manufacturer:
-          </label>
-          <input
-            type="text"
-            name="manufacturer"
-            className="form-control"
-            placeholder="Manufacturer Name"
-            {...register('manufacturer', {
-              required: {
-                value: true,
-                message: 'This field is required',
-              },
-              minLength: 3,
-              maxLength: 64,
-            })}
-          />
-          {errors?.manufacturer?.type === 'required' && (
-            <span role="alert">{errors.manufacturer.message}</span>
-          )}
-          {(errors?.manufacturer?.type === 'minLength' ||
-            errors?.manufacturer?.type === 'maxLength') && (
-            <span role="alert">
-              Manufacturer name must be 3 to 64 characters long
-            </span>
-          )}
-        </div>
+        <FormInput
+          label="Manufacturer Name"
+          name="manufacturer"
+          variant="standard"
+          type="text"
+          errors={errors}
+          register={register('manufacturer', {
+            required: {
+              value: true,
+            },
+            minLength: {
+              value: 3,
+              message:
+                '\'Manufacturer Name\' must be more than 3 characters long',
+            },
+            maxLength: {
+              value: 64,
+              message:
+                '\'Manufacturer Name\' must be less than 64 characters long',
+            },
+          })}
+        />
 
         <div className="grouped-controls">
-          <div className="height">
-            <label htmlFor="price" className="form-label">
-              Price:
-            </label>
-            <input
-              type="number"
-              name="price"
-              className="form-control"
-              placeholder="Price, UAH"
-              {...register('price', {
-                required: {
-                  value: true,
-                  message: 'This field is required',
-                },
-                min: 0,
-                max: 1000000,
-                valueAsNumber: true,
-              })}
-            />
-            {errors?.price?.type === 'required' && (
-              <span role="alert">{errors.price.message}</span>
-            )}
-            {(errors?.price?.type === 'min' ||
-              errors?.price?.type === 'max') && (
-              <span role="alert">
-                The price should be from 0 to 1,000,000 UAH
-              </span>
-            )}
-          </div>
-
-          <div className="height">
-            <label htmlFor="type" className="form-label">
-              Product Type:
-            </label>
-            <FormControl fullWidth size="small">
-              <InputLabel id="type-select-label">Product Type</InputLabel>
-              <Select
-                labelId="type-select-label"
-                value={productTimeValue}
-                label="Product Type"
-                name="type"
-                {...register('type', {
-                  required: {
-                    value: true,
-                    message: 'This field is required',
-                  },
-                  onChange: (e) => onChangeType(e),
-                })}
-              >
-                {!isEmpty(types) &&
-                  types.map((type) => (
-                    <MenuItem key={type} value={type}>
-                      {snakeCaseToNormalString(type)}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-            {errors?.type?.type === 'required' && (
-              <span role="alert">{errors.type.message}</span>
-            )}
-          </div>
-        </div>
-
-        <div className="height">
-          <label htmlFor="photoUrl" className="form-label">
-            Photo URL:
-          </label>
-          <input
-            type="url"
-            name="photoUrl"
-            className="form-control"
-            placeholder="Upload photo here"
-            {...register('photoUrl')}
+          <FormInput
+            label="Price, UAH"
+            name="price"
+            variant="standard"
+            type="number"
+            errors={errors}
+            register={register('price', {
+              required: {
+                value: true,
+              },
+              min: {
+                value: 0,
+                message: '\'Price\' must be more than 0',
+              },
+              max: {
+                value: 1000000,
+                message: '\'Price\' must be less than 1000000',
+              },
+              valueAsNumber: true,
+            })}
           />
-        </div>
 
-        <div className="height textarea-control">
-          <label htmlFor="shortDescription" className="form-label">
-            Short Description:
-          </label>
-          <textarea
-            type="text"
-            name="shortDescription"
-            className="form-control"
-            placeholder="Add short description"
-            {...register('shortDescription', {
+          <FormSelect
+            name="type"
+            label="Product Type"
+            errors={errors}
+            variant="standard"
+            options={types}
+            register={register('type', {
               required: {
                 value: true,
                 message: 'This field is required',
               },
-              minLength: 10,
-              maxLength: 256,
             })}
           />
-          {errors?.shortDescription?.type === 'required' && (
-            <span role="alert">{errors.shortDescription.message}</span>
-          )}
-          {(errors?.shortDescription?.type === 'minLength' ||
-            errors?.shortDescription?.type === 'maxLength') && (
-            <span role="alert">
-              Description must be 10 to 256 characters long
-            </span>
-          )}
         </div>
+
+        <FormInput
+          label="Photo URL"
+          name="photoUrl"
+          variant="standard"
+          type="url"
+          errors={errors}
+          register={register('photoUrl')}
+        />
+
+        <FormInput
+          label="Product short description"
+          name="shortDescription"
+          variant="standard"
+          type="text"
+          multiline={4}
+          errors={errors}
+          register={register('shortDescription', {
+            required: {
+              value: true,
+            },
+            minLength: {
+              value: 10,
+              message:
+                '\'Product short description\' must be more than 10 characters long',
+            },
+            maxLength: {
+              value: 256,
+              message:
+                '\'Product short description\' must be less than 256 characters long',
+            },
+          })}
+        />
 
         {!isSubmitting && (
           <button
