@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { useSearchParams } from 'react-router-dom';
 
 function useQueryParams() {
@@ -24,10 +25,9 @@ function useQueryParams() {
     const paramArray = [];
 
     params.forEach((param) => {
-      const rawParam = searchParams.get(param.name);
-
       switch (param.type) {
         case 'numeric': {
+          const rawParam = searchParams.get(param.name);
           let value = Number(rawParam);
           value = isNaN(value) ? 1 : value;
           value = value < param.lowLimit ? param.lowLimit : value;
@@ -36,11 +36,21 @@ function useQueryParams() {
           paramArray.push(value);
           break;
         }
-        case 'enum': {
-          if (param.values.some((p) => p === rawParam)) {
+        case 'text': {
+          const rawParam = searchParams.get(param.name);
+          if (!isEmpty(param.validValues)) {
+            if (param.validValues.some((p) => p === rawParam)) {
+              paramArray.push(rawParam);
+            } else {
+              paramArray.push(param.validValues[0]);
+            }
+          }
+          break;
+        }
+        case 'array': {
+          const rawParam = searchParams.getAll(param.name);
+          if (!isEmpty(rawParam)) {
             paramArray.push(rawParam);
-          } else {
-            paramArray.push(param.values[0]);
           }
           break;
         }

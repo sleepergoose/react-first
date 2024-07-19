@@ -1,8 +1,0 @@
-.filter-container {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: end;
-  width: 100%;
-  margin-bottom: 10px;
-}

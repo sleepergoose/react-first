@@ -14,7 +14,7 @@ const HomePage = () => {
 
   const { getQueryParams } = useQueryParams();
 
-  const [page, limit, sortOption] = getQueryParams(
+  const [page, limit, sortOption, type, manufacturer] = getQueryParams(
     {
       name: 'page',
       type: 'numeric',
@@ -29,8 +29,16 @@ const HomePage = () => {
     },
     {
       name: 'sortOption',
-      type: 'enum',
-      values: [...sortOptions.map((o) => o.value)],
+      type: 'text',
+      validValues: [...sortOptions.map((o) => o.value)],
+    },
+    {
+      name: 'type',
+      type: 'array',
+    },
+    {
+      name: 'manufacturer',
+      type: 'array',
     }
   );
 

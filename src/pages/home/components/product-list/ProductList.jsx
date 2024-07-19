@@ -4,6 +4,8 @@ import Pagination from '../../../../components/pagination/Pagination.jsx';
 import { isEmpty } from 'lodash';
 import Sort from '../../../../components/sort/Sort.jsx';
 import { sortOptions } from '../../components/filter/models/sort-options.js';
+import ProductFilter from '../filter/ProductFilter.jsx';
+import { baseFiltersOptions } from '../filter/models/filter-options.js';
 
 const ProductList = ({
   productsData,
@@ -26,13 +28,26 @@ const ProductList = ({
     }
   };
 
+  const handleFilter = (filterParams) => {
+    if (handleEvents) {
+      handleEvents(page, sortOption, filterParams);
+    }
+  };
+
   return (
     <>
-      <Sort
-        handleChange={handleSort}
-        currentValue={sortOption}
-        sortOptions={sortOptions}
-      />
+      <div className="filter-contaner">
+        <Sort
+          handleChange={handleSort}
+          currentValue={sortOption}
+          sortOptions={sortOptions}
+        />
+        <ProductFilter
+          filters={baseFiltersOptions}
+          handleFilter={handleFilter}
+        />
+      </div>
+
       <h1 className="list-title">Product List</h1>
       <div className="product-list-container">
         <div className="list">
