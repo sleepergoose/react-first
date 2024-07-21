@@ -19,7 +19,7 @@ const ProductFilter = ({ filters, handleFilter }) => {
     setValues({ ...values });
   };
 
-  const handleClick = () => {
+  const handleApplyClick = () => {
     if (handleFilter && isArray(filters)) {
       const queryQueryParams = filters
         .map((filter) =>
@@ -32,6 +32,11 @@ const ProductFilter = ({ filters, handleFilter }) => {
 
       handleFilter(queryQueryParams);
     }
+  };
+
+  const handleClearAllClick = () => {
+    setValues({});
+    handleFilter('');
   };
 
   useEffect(() => {
@@ -96,8 +101,11 @@ const ProductFilter = ({ filters, handleFilter }) => {
           </FormControl>
         ))}
 
-      <Button size="medium" onClick={handleClick}>
+      <Button size="medium" onClick={handleApplyClick}>
         Apply
+      </Button>
+      <Button size="medium" onClick={handleClearAllClick}>
+        Clear All
       </Button>
     </div>
   );
