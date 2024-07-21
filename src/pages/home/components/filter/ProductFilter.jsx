@@ -23,13 +23,14 @@ const ProductFilter = ({ filters, handleFilter }) => {
     if (handleFilter && isArray(filters)) {
       const queryQueryParams = filters
         .map((filter) =>
-          (!isEmpty(values[filter.type]) ? `&${filter.type}=${values[filter.type].join(`&${filter.type}=`)}` : '')
+          (!isEmpty(values[filter.type])
+            ? `&${filter.type}=${values[filter.type].join(`&${filter.type}=`)}`
+            : '')
         )
-        .filter((v) => !!v);
+        .filter((v) => !!v)
+        .join('');
 
-      if (!isEmpty(queryQueryParams)) {
-        handleFilter(queryQueryParams);
-      }
+      handleFilter(queryQueryParams);
     }
   };
 
@@ -51,7 +52,7 @@ const ProductFilter = ({ filters, handleFilter }) => {
         !isEmpty(filters) &&
         filters.map((filter) => (
           <FormControl
-            sx={{ minWidth: 150, fontSize: 12 }}
+            sx={{ maxWidth: 200, minWidth: 150, fontSize: 12 }}
             size="small"
             key={filter.type}
           >
@@ -63,7 +64,9 @@ const ProductFilter = ({ filters, handleFilter }) => {
               name={filter.type}
               multiple
               renderValue={(selected) =>
-                (selected.length > 1 ? 'Multiple' : selected)
+                (selected.length > 1
+                  ? 'Multiple'
+                  : snakeCaseToNormalString(selected[0]))
               }
               onChange={handleChange}
             >

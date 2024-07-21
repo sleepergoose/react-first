@@ -49,9 +49,7 @@ function useQueryParams() {
         }
         case 'array': {
           const rawParam = searchParams.getAll(param.name);
-          if (!isEmpty(rawParam)) {
-            paramArray.push(rawParam);
-          }
+          paramArray.push(isEmpty(rawParam) ? [] : rawParam);
           break;
         }
         default:

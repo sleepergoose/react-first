@@ -29,7 +29,7 @@ module.exports = {
     'no-useless-concat': 'error',
     'no-useless-return': 'error',
     'no-constant-condition': 'warn',
-    'no-unused-vars': ['warn', { 'argsIgnorePattern': 'req|res|next|__' }],
+    'no-unused-vars': ['warn'],
     //* Enhance Readability
     'indent': ['error', 2, { 'SwitchCase': 1 }],
     'no-mixed-spaces-and-tabs': 'warn',
@@ -42,7 +42,7 @@ module.exports = {
     'max-len': ['error', { 'code': 200 }],
     'max-lines': ['error', { 'max': 500 }],
     'keyword-spacing': 'error',
-    'multiline-ternary': ['error', 'never'],
+    // 'multiline-ternary': ['error', 'never'],
     'no-mixed-operators': 'error',
     //
     'no-multiple-empty-lines': ['error', { 'max': 2, 'maxEOF': 1 }],

@@ -11,6 +11,10 @@ class ProductService {
   static createProduct = async (product) => {
     return await httpService.post(`${apiBaseUrl}/products/`, product);
   };
+
+  static getFiltersData = async () => {
+    return await httpService.get(`${apiBaseUrl}/products/filters`);
+  };
 }
 
 export default ProductService;
