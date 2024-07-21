@@ -1,19 +1,16 @@
-import { apiBaseUrl } from '../constants/environment.jsx';
-import HttpService from '../services/http.service.jsx';
+import { apiBaseUrl } from '../constants/environment.js';
+import httpService from './http.service.js';
 
 let instance = null;
 
 class AuthService {
   constructor() {
     if (!instance) {
-      this.#httpService = new HttpService();
       instance = this;
     } else {
       return instance;
     }
   }
-
-  #httpService;
 
   getAuthState = () => {
     return !!localStorage.getItem('user');
@@ -32,7 +29,7 @@ class AuthService {
     const url = `${apiBaseUrl}/auth/register`;
 
     try {
-      const response = await this.#httpService.post(url, {
+      const response = await httpService.post(url, {
         name,
         email,
         password,
@@ -56,7 +53,7 @@ class AuthService {
     const url = `${apiBaseUrl}/auth/login`;
 
     try {
-      const response = await this.#httpService.post(url, { email, password });
+      const response = await httpService.post(url, { email, password });
 
       if (response?.success) {
         localStorage.setItem('user', JSON.stringify(response.user));
@@ -70,7 +67,7 @@ class AuthService {
 
   logOut = async () => {
     const url = `${apiBaseUrl}/auth/logout`;
-    await this.#httpService.post(url, null);
+    await httpService.post(url, null);
     localStorage.clear();
   };
 }

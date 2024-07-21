@@ -1,6 +1,6 @@
 import './MainHeader.css';
-import AuthService from '../../services/auth.service.jsx';
-import { useNavigate } from 'react-router-dom';
+import AuthService from '../../services/auth.service.js';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const MainHeader = () => {
@@ -30,10 +30,10 @@ const MainHeader = () => {
   return (
     <div className="main-header">
       <div className="navigator">
-        <div className="logo">
+        <Link className="logo" to="/">
           <img src="src/assets/react.svg" alt="react-icon" />
           First React App
-        </div>
+        </Link>
       </div>
       <div className="profile-menu">
         <button className="profile-menu-btn" onClick={handleProfileMenuClick}>

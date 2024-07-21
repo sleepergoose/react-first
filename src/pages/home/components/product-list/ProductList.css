@@ -20,3 +20,19 @@
   text-align: center;
   width: 100%;
 }
+
+.filter-contaner {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}

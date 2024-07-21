@@ -2,7 +2,7 @@ import './RegisterPage.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import AuthService from '../../services/auth.service.jsx';
+import AuthService from '../../services/auth.service.js';
 
 const RegisterPage = () => {
   const authService = new AuthService();
