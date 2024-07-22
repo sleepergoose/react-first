@@ -1,18 +1,18 @@
-import './ProductList.css';
-import Product from '../product/Product.jsx';
-import Pagination from '../../../../components/pagination/Pagination.jsx';
+import './ProductListPage.css';
+import Product from './components/product/Product.jsx';
+import Pagination from '../../../components/pagination/Pagination.jsx';
 import { isEmpty } from 'lodash';
-import Sort from '../../../../components/sort/Sort.jsx';
-import { sortOptions } from '../../components/filter/models/sort-options.js';
-import ProductFilter from '../filter/ProductFilter.jsx';
-import { baseFiltersOptions } from '../filter/models/filter-options.js';
-import { productQueryParams } from './product-query-params.js';
-import useQueryParams from '../../../../hooks/use-query-params.jsx';
-import Spinner from '../../../../components/spinner/Spinner.jsx';
-import { useFetchData } from '../../../../hooks/use-fetch-data.jsx';
+import Sort from '../../../components/sort/Sort.jsx';
+import { sortOptions } from './components/filter/models/sort-options.js';
+import ProductFilter from './components/filter/ProductFilter.jsx';
+import { baseFiltersOptions } from './components/filter/models/filter-options.js';
+import { productQueryParams } from './data/product-query-params.js';
+import useQueryParams from '../../../hooks/use-query-params.jsx';
+import Spinner from '../../../components/spinner/Spinner.jsx';
+import { useFetchData } from '../../../hooks/use-fetch-data.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ProductService from '../../../../services/product.service.js';
+import ProductService from '../../../services/product.service.js';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -57,18 +57,18 @@ const ProductList = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handlePagination = (newPage) => {
-    const newUrl = prepareQueryParams(newPage, sortOption);
-    navigate(newUrl);
+    const queryParams = prepareQueryParams(newPage, sortOption);
+    navigate(`/products${queryParams}`);
   };
 
   const handleSort = (newSortOption) => {
-    const newUrl = prepareQueryParams(page, newSortOption);
-    navigate(newUrl);
+    const queryParams = prepareQueryParams(page, newSortOption);
+    navigate(`/products${queryParams}`);
   };
 
   const handleFilter = (newFilterValues) => {
     navigate(
-      `/?page=${page}&limit=${limit}&sortOption=${sortOption}${newFilterValues}`
+      `/products?page=${page}&limit=${limit}&sortOption=${sortOption}${newFilterValues}`
     );
   };
 

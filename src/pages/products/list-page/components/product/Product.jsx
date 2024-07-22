@@ -1,5 +1,5 @@
 import './Product.css';
-import { noPhotoImageUrl } from '../../../../constants/environment.js';
+import { noPhotoImageUrl } from '../../../../../constants/environment.js';
 
 const Product = ({ product }) => {
   return (

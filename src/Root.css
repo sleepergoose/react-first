@@ -1,4 +1,4 @@
-.content {
+.main-content {
   display: grid;
   grid-template-columns: 1fr 4fr;
   width: 100%;
@@ -8,6 +8,10 @@
     margin: 0 auto;
     grid-template-columns: 270px 1fr;
   }
+}
+
+.page-content {
+  padding: 20px 30px 0 10px;
 }
 
 span[role='alert'] {

@@ -1,23 +1,34 @@
 import './Sidebar.css';
-import { Link } from 'react-router-dom';
+import ManuWhiteIcon from '../../assets/menu-white.svg';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import ListOutlined from '@mui/icons-material/ListOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+import { useLocation } from 'react-router-dom';
+import MenuItemlink from '../manu-item-link/MenuItemLink';
 
 const Sidebar = () => {
+  const location = useLocation();
+
   return (
     <div className="sidebar-container">
       <div className="sidebar">
         <div className="sidebar-header">
-          <img src="src/assets/menu-white.svg" alt="menu-icon" />
+          <img src={ManuWhiteIcon} alt="menu-icon" />
           <span>Menu</span>
         </div>
         <ul className="menu-list">
-          <li>
-            <img src="src/assets/list.svg" alt="list icon" />
-            <Link to={'/'}>Product List</Link>
-          </li>
-          <li>
-            <img src="src/assets/add.svg" alt="add icon" />
-            <Link to={'/add-product'}>Add product</Link>
-          </li>
+          <MenuItemlink link={'/'} pathname={location.pathname}>
+            <HomeOutlinedIcon />
+            Home
+          </MenuItemlink>
+          <MenuItemlink link={'/products'} pathname={location.pathname}>
+            <ListOutlined />
+            Product List
+          </MenuItemlink>
+          <MenuItemlink link={'/products/add'} pathname={location.pathname}>
+            <NoteAddOutlinedIcon />
+            Add Product
+          </MenuItemlink>
         </ul>
       </div>
     </div>

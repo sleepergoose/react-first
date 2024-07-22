@@ -6,21 +6,26 @@ import LoginPage from '../pages/login/LoginPage.jsx';
 import HomePage from '../pages/home/HomePage.jsx';
 import AuthGuard from '../guards/auth.guard.jsx';
 import UnAuthGuard from '../guards/un-auth.guard.jsx';
-import AddProductPage from '../pages/add-product/AddProductPage.jsx';
+import AddProductPage from '../pages/products/add-page/AddProductPage.jsx';
+import ProductListPage from '../pages/products/list-page/ProductListPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: <AuthGuard component={<Root />} />,
     errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
-        element: <AuthGuard component={<HomePage />} />,
+        element: <HomePage />,
       },
       {
-        path: '/add-product',
-        element: <AuthGuard component={<AddProductPage />} />,
+        path: '/products',
+        element: <ProductListPage />,
+      },
+      {
+        path: '/products/add',
+        element: <AddProductPage />,
       },
     ],
   },

@@ -4,7 +4,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { snakeCaseToNormalString } from '../../../../helpers/case-transform';
+import { snakeCaseToNormalString } from '../../../../../helpers/case-transform';
 import { useState, useEffect } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
