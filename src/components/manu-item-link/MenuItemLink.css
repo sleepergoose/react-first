@@ -1,0 +1,21 @@
+.menu-item {
+  padding: 7px 10px;
+
+  a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 7px;
+
+    width: 100%;
+    cursor: pointer;
+  }
+}
+
+.active {
+  a {
+    font-weight: 700;
+    color: #0d0d0d;
+  }
+}
