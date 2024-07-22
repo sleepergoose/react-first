@@ -76,16 +76,18 @@ const ProductList = () => {
     <>
       {true && (
         <div className="filter-contaner">
-          <Sort
-            handleChange={handleSort}
-            currentValue={sortOption}
-            sortOptions={sortOptions}
-          />
           {!isFiltersPending && (
-            <ProductFilter
-              filters={baseFiltersOptions}
-              handleFilter={handleFilter}
-            />
+            <>
+              <Sort
+                handleChange={handleSort}
+                currentValue={sortOption}
+                sortOptions={sortOptions}
+              />
+              <ProductFilter
+                filters={baseFiltersOptions}
+                handleFilter={handleFilter}
+              />
+            </>
           )}
         </div>
       )}
