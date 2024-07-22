@@ -57,18 +57,18 @@ const ProductList = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handlePagination = (newPage) => {
-    const newUrl = prepareQueryParams(newPage, sortOption);
-    navigate(newUrl);
+    const queryParams = prepareQueryParams(newPage, sortOption);
+    navigate(`/products${queryParams}`);
   };
 
   const handleSort = (newSortOption) => {
-    const newUrl = prepareQueryParams(page, newSortOption);
-    navigate(newUrl);
+    const queryParams = prepareQueryParams(page, newSortOption);
+    navigate(`/products${queryParams}`);
   };
 
   const handleFilter = (newFilterValues) => {
     navigate(
-      `/?page=${page}&limit=${limit}&sortOption=${sortOption}${newFilterValues}`
+      `/products?page=${page}&limit=${limit}&sortOption=${sortOption}${newFilterValues}`
     );
   };
 
