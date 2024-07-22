@@ -1,4 +1,4 @@
-import { sortOptions } from '../filter/models/sort-options';
+import { sortOptions } from '../components/filter/models/sort-options.js';
 
 export const productQueryParams = [
   {

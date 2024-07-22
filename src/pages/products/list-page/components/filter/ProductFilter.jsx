@@ -4,7 +4,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { snakeCaseToNormalString } from '../../../../helpers/case-transform';
+import { snakeCaseToNormalString } from '../../../../../helpers/case-transform';
 import { useState, useEffect } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
@@ -23,9 +23,9 @@ const ProductFilter = ({ filters, handleFilter }) => {
     if (handleFilter && isArray(filters)) {
       const queryQueryParams = filters
         .map((filter) =>
-          (!isEmpty(values[filter.type])
-            ? `&${filter.type}=${values[filter.type].join(`&${filter.type}=`)}`
-            : '')
+        (!isEmpty(values[filter.type])
+          ? `&${filter.type}=${values[filter.type].join(`&${filter.type}=`)}`
+          : '')
         )
         .filter((v) => !!v)
         .join('');
@@ -69,9 +69,9 @@ const ProductFilter = ({ filters, handleFilter }) => {
               name={filter.type}
               multiple
               renderValue={(selected) =>
-                (selected.length > 1
-                  ? 'Multiple'
-                  : snakeCaseToNormalString(selected[0]))
+              (selected.length > 1
+                ? 'Multiple'
+                : snakeCaseToNormalString(selected[0]))
               }
               onChange={handleChange}
             >

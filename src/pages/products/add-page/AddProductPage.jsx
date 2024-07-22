@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { useFetchData } from '../../hooks/use-fetch-data.jsx';
-import FormInput from '../../components/form/FormInput.jsx';
-import FormSelect from '../../components/form/FormSelect.jsx';
-import productService from '../../services/product.service.js';
+import { useFetchData } from '../../../hooks/use-fetch-data.jsx';
+import FormInput from '../../../components/form/FormInput.jsx';
+import FormSelect from '../../../components/form/FormSelect.jsx';
+import productService from '../../../services/product.service.js';
 
 const AddProductPage = () => {
   const horizontal = 'left';

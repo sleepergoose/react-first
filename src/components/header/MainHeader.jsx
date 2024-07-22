@@ -2,6 +2,8 @@ import './MainHeader.css';
 import AuthService from '../../services/auth.service.js';
 import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Logo from '../../assets/react.svg';
+import UserAvatar from '../../assets/user-avatar.svg';
 
 const MainHeader = () => {
   const authService = new AuthService();
@@ -31,7 +33,7 @@ const MainHeader = () => {
     <div className="main-header">
       <div className="navigator">
         <Link className="logo" to="/">
-          <img src="src/assets/react.svg" alt="react-icon" />
+          <img src={Logo} alt="react-icon" />
           First React App
         </Link>
       </div>
@@ -43,11 +45,7 @@ const MainHeader = () => {
               <span className="email">{user.email}</span>
             </div>
           )}
-          <img
-            className="avatar"
-            src="src/assets/user-avatar.svg"
-            alt="avatar"
-          />
+          <img className="avatar" src={UserAvatar} alt="avatar" />
           {profileMenuState && (
             <ul className="menu">
               <li onClick={handleProfileClick}>Profile</li>
