@@ -98,6 +98,7 @@ const LoginPage = () => {
                 required: true,
                 minLength: 8,
                 maxLength: 20,
+                pattern: /^[a-zA-Z0-9!@#$%^&*+-]{8,20}$/,
               })}
             />
             {errors?.password?.type === 'required' && (
@@ -106,6 +107,11 @@ const LoginPage = () => {
             {(errors?.password?.type === 'minLength' ||
               errors.password?.type === 'maxLength') && (
               <span role="alert">Password must be 8 to 20 characters long</span>
+            )}
+            {errors?.password?.type === 'pattern' && (
+              <span role="alert">
+                Password may include only letters, digits and symbols !@#$%^&*+-
+              </span>
             )}
           </div>
 
