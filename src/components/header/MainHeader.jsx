@@ -12,7 +12,7 @@ const MainHeader = () => {
 
   useEffect(() => {
     setUser(authService.getCurrentUser());
-  }, []);  
+  }, []);
 
   const handleLogOutClick = async () => {
     await authService.logOut();
