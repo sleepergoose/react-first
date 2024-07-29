@@ -1,27 +1,17 @@
 import configs from '../configuration/config.js';
 import httpService from './http.service.js';
 
-let instance = null;
-
 class AuthService {
-  constructor() {
-    if (!instance) {
-      instance = this;
-    } else {
-      return instance;
-    }
-  }
-
-  getAuthState = () => {
+  static getAuthState = () => {
     return !!localStorage.getItem('user');
   };
 
-  getCurrentUser = () => {
+  static getCurrentUser = () => {
     const userRawString = localStorage.getItem('user');
     return userRawString ? JSON.parse(userRawString) : null;
   };
 
-  signUp = async ({ name, email, password }) => {
+  static signUp = async ({ name, email, password }) => {
     if (!(name && email && password)) {
       throw new Error('Required registration parameter is missing.');
     }
@@ -37,6 +27,7 @@ class AuthService {
 
       if (response?.success) {
         localStorage.setItem('user', JSON.stringify(response.user));
+        return response;
       } else {
         localStorage.clear();
       }
@@ -45,7 +36,7 @@ class AuthService {
     }
   };
 
-  signIn = async ({ email, password }) => {
+  static signIn = async ({ email, password }) => {
     if (!(email && password)) {
       throw new Error('Required login parameter is missing.');
     }
@@ -57,6 +48,7 @@ class AuthService {
 
       if (response?.success) {
         localStorage.setItem('user', JSON.stringify(response.user));
+        return response;
       } else {
         localStorage.clear();
       }
@@ -65,7 +57,7 @@ class AuthService {
     }
   };
 
-  logOut = async () => {
+  static logOut = async () => {
     const url = `${configs.apiBaseUrl}/auth/logout`;
     await httpService.post(url, null);
     localStorage.clear();

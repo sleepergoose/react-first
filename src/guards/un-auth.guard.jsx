@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from '../services/auth.service';
+import authService from '../services/auth.service';
 
 const UnAuthGuard = ({ component }) => {
   const navigate = useNavigate();
   const [authState, setAuthState] = useState(false);
-  const authService = new AuthService();
 
   useEffect(() => {
     checkAuthState();

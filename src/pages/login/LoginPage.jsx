@@ -2,10 +2,9 @@ import './LoginPage.css';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import AuthService from '../../services/auth.service.js';
+import authService from '../../services/auth.service.js';
 
 const LoginPage = () => {
-  const authService = new AuthService();
   const navigate = useNavigate();
 
   const [requestState, setRequestState] = useState({
@@ -106,8 +105,8 @@ const LoginPage = () => {
             )}
             {(errors?.password?.type === 'minLength' ||
               errors.password?.type === 'maxLength') && (
-              <span role="alert">Password must be 8 to 20 characters long</span>
-            )}
+                <span role="alert">Password must be 8 to 20 characters long</span>
+              )}
             {errors?.password?.type === 'pattern' && (
               <span role="alert">
                 Password may include only letters, digits and symbols !@#$%^&*+-

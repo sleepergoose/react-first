@@ -1,12 +1,11 @@
 import './MainHeader.css';
-import AuthService from '../../services/auth.service.js';
+import authService from '../../services/auth.service.js';
 import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Logo from '../../assets/react.svg';
 import UserAvatar from '../../assets/user-avatar.svg';
 
 const MainHeader = () => {
-  const authService = new AuthService();
   const navigate = useNavigate();
   const [profileMenuState, setProfileMenuState] = useState(false);
   const [user, setUser] = useState(null);
