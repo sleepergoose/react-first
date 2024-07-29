@@ -1,6 +1,5 @@
 import './LoginPage.css';
-import { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../../store/slices/auth.slice.js';
@@ -8,19 +7,13 @@ import { loginRequestAction } from '../../store/slices/auth.slice.js';
 const LoginPage = () => {
   const authState = useSelector((store) => store?.auth?.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { register, handleSubmit, getValues, formState } = useForm({
     reValidateMode: 'onBlur',
     mode: 'all',
   });
-  const { errors, isSubmitting, isValid } = formState;
 
-  useEffect(() => {
-    if (authState?.isLoggedIn) {
-      navigate('/');
-    }
-  }, [authState]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { errors, isSubmitting, isValid } = formState;
 
   const onSubmit = async () => {
     const { email, password } = getValues();
@@ -118,7 +111,7 @@ const LoginPage = () => {
 
           {authState?.error && (
             <div className="error-message">
-              <h4>An error occurred during signing in flow.</h4>
+              <p>An error occurred during signing in flow.</p>
               <p>{authState?.error}</p>
             </div>
           )}

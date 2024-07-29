@@ -21,7 +21,7 @@ const logoutSlice = createSlice({
     },
     logoutFailureAction: (state, { payload }) => {
       state.logout.isPending = false;
-      state.logout.error = payload?.message;
+      state.logout.error = payload;
     },
   }
 });

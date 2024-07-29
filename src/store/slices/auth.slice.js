@@ -25,10 +25,10 @@ const authSlice = createSlice({
       state.auth.error = '';
       state.auth.user = payload?.user;
     },
-    loginFailureAction: (state, { error }) => {
+    loginFailureAction: (state, { payload }) => {
       state.auth.isLoading = false;
       state.auth.isLoggedIn = false;
-      state.auth.error = error;
+      state.auth.error = payload;
       state.auth.user = null;
     },
     clearAuthAction: (state) => {
