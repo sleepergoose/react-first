@@ -4,7 +4,7 @@ import httpService from './http.service.js';
 
 class AuthService {
   static getCurrentUser = () => {
-    const { user } = useSelector(store => store?.auth?.auth);
+    const { user } = useSelector((store) => store?.auth);
     return { ...user } ?? null;
   };
 

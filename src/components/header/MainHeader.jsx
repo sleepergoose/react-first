@@ -8,8 +8,8 @@ import { logoutRequestAction } from '../../store/slices/logout.slice.js';
 
 const MainHeader = () => {
   const [profileMenuState, setProfileMenuState] = useState(false);
-  const { user } = useSelector(store => store?.auth?.auth);
-  const { isPending } = useSelector(store => store?.logout?.logout);
+  const { user } = useSelector((store) => store?.auth);
+  const { isPending } = useSelector((store) => store?.logout);
   const dispatch = useDispatch();
 
   const handleLogOutClick = async () => {
@@ -45,7 +45,12 @@ const MainHeader = () => {
           {profileMenuState && (
             <ul className="menu">
               <li onClick={handleProfileClick}>Profile</li>
-              <li className={isPending ? 'disabled-item' : ''} onClick={handleLogOutClick}>Log Out</li>
+              <li
+                className={isPending ? 'disabled-item' : ''}
+                onClick={handleLogOutClick}
+              >
+                Log Out
+              </li>
             </ul>
           )}
         </button>

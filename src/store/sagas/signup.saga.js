@@ -1,5 +1,9 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { signupFailureAction, signupRequestAction, signupSuccessAction } from '../slices/signup.slice';
+import {
+  signupFailureAction,
+  signupRequestAction,
+  signupSuccessAction,
+} from '../slices/signup.slice';
 import authService from '../../services/auth.service';
 import { loginSuccessAction } from '../slices/auth.slice';
 
@@ -13,7 +17,6 @@ function* signupWorker({ payload }) {
 
     yield put(signupSuccessAction(response));
     yield put(loginSuccessAction(response));
-
   } catch (error) {
     yield put(signupFailureAction(error?.message));
   }

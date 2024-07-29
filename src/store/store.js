@@ -3,7 +3,10 @@ import configs from '../configuration/config.js';
 import rootReducer from './root-reducer.js';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas/root-saga.js';
-import { getAuthStateFromStorage, saveAuthStateToStorage } from '../utils/local-storage.utils.js';
+import {
+  getAuthStateFromStorage,
+  saveAuthStateToStorage,
+} from '../utils/local-storage.utils.js';
 
 const preloadedState = getAuthStateFromStorage();
 

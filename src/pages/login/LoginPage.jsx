@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../../store/slices/auth.slice.js';
 
 const LoginPage = () => {
-  const authState = useSelector((store) => store?.auth?.auth);
+  const authState = useSelector((store) => store?.auth);
   const dispatch = useDispatch();
 
   const { register, handleSubmit, getValues, formState } = useForm({
@@ -85,8 +85,8 @@ const LoginPage = () => {
             )}
             {(errors?.password?.type === 'minLength' ||
               errors.password?.type === 'maxLength') && (
-                <span role="alert">Password must be 8 to 20 characters long</span>
-              )}
+              <span role="alert">Password must be 8 to 20 characters long</span>
+            )}
             {errors?.password?.type === 'pattern' && (
               <span role="alert">
                 Password may include only letters, digits and symbols !@#$%^&*+-

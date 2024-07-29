@@ -1,39 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const authInitialState = {
-  auth: {
-    isLoading: false,
-    isLoggedIn: false,
-    error: '',
-    user: null,
-  },
+  isLoading: false,
+  isLoggedIn: false,
+  error: '',
+  user: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: authInitialState,
   reducers: {
-    loginRequestAction: (state) => {
-      state.auth.isLoading = true;
-      state.auth.isLoggedIn = false;
-      state.auth.error = '';
-      state.auth.user = null;
-    },
-    loginSuccessAction: (state, { payload }) => {
-      state.auth.isLoading = false;
-      state.auth.isLoggedIn = payload?.success;
-      state.auth.error = '';
-      state.auth.user = payload?.user;
-    },
-    loginFailureAction: (state, { payload }) => {
-      state.auth.isLoading = false;
-      state.auth.isLoggedIn = false;
-      state.auth.error = payload;
-      state.auth.user = null;
-    },
-    clearAuthAction: (state) => {
-      state.auth = authInitialState.auth;
-    },
+    loginRequestAction: () => ({
+      isLoading: true,
+      isLoggedIn: false,
+      error: '',
+      user: null,
+    }),
+    loginSuccessAction: (state, { payload }) => ({
+      isLoading: false,
+      isLoggedIn: payload?.success,
+      error: '',
+      user: payload?.user,
+    }),
+    loginFailureAction: (state, { payload }) => ({
+      isLoading: false,
+      isLoggedIn: false,
+      error: payload,
+      user: null,
+    }),
+    clearAuthAction: () => ({
+      isLoading: false,
+      isLoggedIn: false,
+      error: '',
+      user: null,
+    }),
   },
 });
 

@@ -4,32 +4,29 @@ const initialLogoutState = {
   logout: {
     isPending: false,
     error: '',
-  }
+  },
 };
 
 const logoutSlice = createSlice({
   name: 'logout',
   initialState: initialLogoutState,
   reducers: {
-    logoutRequestAction: (state) => {
-      state.logout.isPending = true;
-      state.logout.error = '';
-    },
-    logoutSuccessAction: (state) => {
-      state.logout.isPending = false;
-      state.logout.error = '';
-    },
-    logoutFailureAction: (state, { payload }) => {
-      state.logout.isPending = false;
-      state.logout.error = payload;
-    },
-  }
+    logoutRequestAction: () => ({
+      isPending: true,
+      error: '',
+    }),
+    logoutSuccessAction: () => ({
+      isPending: false,
+      error: '',
+    }),
+    logoutFailureAction: (state, { payload }) => ({
+      isPending: false,
+      error: payload,
+    }),
+  },
 });
 
-export const {
-  logoutRequestAction,
-  logoutSuccessAction,
-  logoutFailureAction,
-} = logoutSlice.actions;
+export const { logoutRequestAction, logoutSuccessAction, logoutFailureAction } =
+  logoutSlice.actions;
 
 export default logoutSlice.reducer;

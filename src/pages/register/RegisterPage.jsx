@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-  const signupState = useSelector(store => store?.signup?.signup);
+  const signupState = useSelector((store) => store?.signup);
 
   const { register, handleSubmit, getValues, formState } = useForm({
     reValidateMode: 'onBlur',
@@ -18,11 +18,13 @@ const RegisterPage = () => {
     const { name, email, password } = getValues();
 
     if (name && email && password) {
-      dispatch(signupRequestAction({
-        name: name,
-        email: email,
-        password: password,
-      }));
+      dispatch(
+        signupRequestAction({
+          name: name,
+          email: email,
+          password: password,
+        })
+      );
     }
   };
 
@@ -60,8 +62,8 @@ const RegisterPage = () => {
             )}
             {(errors?.name?.type === 'minLength' ||
               errors?.name?.type === 'maxLength') && (
-                <span role="alert">Name must be 3 to 32 characters long</span>
-              )}
+              <span role="alert">Name must be 3 to 32 characters long</span>
+            )}
           </div>
 
           <div className="m-3 w-100 mb-0 form-control-height">
@@ -107,8 +109,8 @@ const RegisterPage = () => {
             )}
             {(errors?.password?.type === 'minLength' ||
               errors?.password?.type === 'maxLength') && (
-                <span role="alert">Password must be 8 to 32 characters long</span>
-              )}
+              <span role="alert">Password must be 8 to 32 characters long</span>
+            )}
             {errors?.password?.type === 'pattern' && (
               <span role="alert">
                 Password may include only letters, digits and symbols !@#$%^&*+-

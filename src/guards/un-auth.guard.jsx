@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const UnAuthGuard = ({ component }) => {
-  const authState = useSelector((store) => store?.auth?.auth);
+  const authState = useSelector((store) => store?.auth);
 
   return authState?.isLoggedIn ? (
     <Navigate to={'/'} />
