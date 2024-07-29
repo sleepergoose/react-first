@@ -1,14 +1,11 @@
+import { useSelector } from 'react-redux';
 import configs from '../configuration/config.js';
 import httpService from './http.service.js';
 
 class AuthService {
-  static getAuthState = () => {
-    return !!localStorage.getItem('user');
-  };
-
   static getCurrentUser = () => {
-    const userRawString = localStorage.getItem('user');
-    return userRawString ? JSON.parse(userRawString) : null;
+    const { user } = useSelector(store => store?.auth?.auth);
+    return { ...user } ?? null;
   };
 
   static signUp = async ({ name, email, password }) => {
@@ -47,7 +44,6 @@ class AuthService {
       const response = await httpService.post(url, { email, password });
 
       if (response?.success) {
-        localStorage.setItem('user', JSON.stringify(response.user));
         return response;
       } else {
         localStorage.clear();

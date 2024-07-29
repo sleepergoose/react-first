@@ -1,4 +1,4 @@
-export const getAuthState = () => {
+export const getAuthStateFromStorage = () => {
   try {
     const serializedAuthState = localStorage.getItem('auth');
     if (serializedAuthState === null) {
@@ -10,7 +10,7 @@ export const getAuthState = () => {
   }
 };
 
-export const saveAuthState = (state) => {
+export const saveAuthStateToStorage = (state) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('auth', serializedState);
