@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
-  loginUserAction,
-  loginUserSuccessAction,
-  loginUserFailureAction,
+  loginRequestAction,
+  loginSuccessAction,
+  loginFailureAction,
 } from '../slices/auth.slice.js';
 import authService from '../../services/auth.service.js';
 
@@ -13,12 +13,12 @@ function* loginWorker({ payload }) {
       password: payload.password,
     });
 
-    yield put(loginUserSuccessAction(response));
+    yield put(loginSuccessAction(response));
   } catch (error) {
-    yield put(loginUserFailureAction(error?.message));
+    yield put(loginFailureAction(error?.message));
   }
 }
 
 export function* loginWatcher() {
-  yield takeLatest(loginUserAction, loginWorker);
+  yield takeLatest(loginRequestAction, loginWorker);
 }

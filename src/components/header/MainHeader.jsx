@@ -1,22 +1,19 @@
 import './MainHeader.css';
-import authService from '../../services/auth.service.js';
-import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import Logo from '../../assets/react.svg';
 import UserAvatar from '../../assets/user-avatar.svg';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutRequestAction } from '../../store/slices/logout.slice.js';
 
 const MainHeader = () => {
-  const navigate = useNavigate();
   const [profileMenuState, setProfileMenuState] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    setUser(authService.getCurrentUser());
-  }, []);
+  const { user } = useSelector(store => store?.auth?.auth);
+  const { isPending } = useSelector(store => store?.logout?.logout);
+  const dispatch = useDispatch();
 
   const handleLogOutClick = async () => {
-    await authService.logOut();
-    navigate('/login');
+    dispatch(logoutRequestAction());
   };
 
   const handleProfileMenuClick = (e) => {
@@ -48,7 +45,7 @@ const MainHeader = () => {
           {profileMenuState && (
             <ul className="menu">
               <li onClick={handleProfileClick}>Profile</li>
-              <li onClick={handleLogOutClick}>Log Out</li>
+              <li className={isPending ? 'disabled-item' : ''} onClick={handleLogOutClick}>Log Out</li>
             </ul>
           )}
         </button>

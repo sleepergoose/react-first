@@ -3,12 +3,10 @@ import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserAction } from '../../store/slices/auth.slice.js';
+import { loginRequestAction } from '../../store/slices/auth.slice.js';
 
 const LoginPage = () => {
-  const { isLoading, isLoggedIn, error } = useSelector(
-    (store) => store?.auth?.auth
-  );
+  const authState = useSelector((store) => store?.auth?.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,16 +17,16 @@ const LoginPage = () => {
   const { errors, isSubmitting, isValid } = formState;
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (authState?.isLoggedIn) {
       navigate('/');
     }
-  }, [isLoggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [authState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async () => {
     const { email, password } = getValues();
 
     dispatch(
-      loginUserAction({
+      loginRequestAction({
         email: email,
         password: password,
       })
@@ -94,8 +92,8 @@ const LoginPage = () => {
             )}
             {(errors?.password?.type === 'minLength' ||
               errors.password?.type === 'maxLength') && (
-              <span role="alert">Password must be 8 to 20 characters long</span>
-            )}
+                <span role="alert">Password must be 8 to 20 characters long</span>
+              )}
             {errors?.password?.type === 'pattern' && (
               <span role="alert">
                 Password may include only letters, digits and symbols !@#$%^&*+-
@@ -103,12 +101,12 @@ const LoginPage = () => {
             )}
           </div>
 
-          {isLoading && (
+          {authState?.isLoading && (
             <button type="submit" disabled className="m-3 w-50 btn btn-primary">
               Signing in...
             </button>
           )}
-          {!isLoading && (
+          {!authState?.isLoading && (
             <button
               type="submit"
               disabled={!isValid || isSubmitting}
@@ -118,10 +116,10 @@ const LoginPage = () => {
             </button>
           )}
 
-          {error && (
+          {authState?.error && (
             <div className="error-message">
               <h4>An error occurred during signing in flow.</h4>
-              <p>{error}</p>
+              <p>{authState?.error}</p>
             </div>
           )}
 

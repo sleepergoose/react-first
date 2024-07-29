@@ -99,3 +99,8 @@
     }
   }
 }
+
+li.disabled-item {
+  pointer-events: none;
+  color: #48484850;
+}

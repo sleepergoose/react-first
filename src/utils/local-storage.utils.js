@@ -18,3 +18,7 @@ export const saveAuthState = (state) => {
     console.error('Could not save state', err);
   }
 };
+
+export const clearAuthState = () => {
+  localStorage.clear();
+};
