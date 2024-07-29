@@ -1,4 +1,4 @@
-import { apiBaseUrl } from '../constants/environment.js';
+import configs from '../configuration/config.js';
 import httpService from './http.service.js';
 
 let instance = null;
@@ -26,7 +26,7 @@ class AuthService {
       throw new Error('Required registration parameter is missing.');
     }
 
-    const url = `${apiBaseUrl}/auth/register`;
+    const url = `${configs.apiBaseUrl}/auth/register`;
 
     try {
       const response = await httpService.post(url, {
@@ -50,7 +50,7 @@ class AuthService {
       throw new Error('Required login parameter is missing.');
     }
 
-    const url = `${apiBaseUrl}/auth/login`;
+    const url = `${configs.apiBaseUrl}/auth/login`;
 
     try {
       const response = await httpService.post(url, { email, password });
@@ -66,7 +66,7 @@ class AuthService {
   };
 
   logOut = async () => {
-    const url = `${apiBaseUrl}/auth/logout`;
+    const url = `${configs.apiBaseUrl}/auth/logout`;
     await httpService.post(url, null);
     localStorage.clear();
   };

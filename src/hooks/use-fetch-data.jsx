@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import httpService from '../services/http.service.js';
-import { apiBaseUrl } from '../constants/environment.js';
+import configs from '../configuration/config.js';
 
 export const useFetchData = (url) => {
   const [data, setData] = useState(null);
@@ -11,7 +11,7 @@ export const useFetchData = (url) => {
     url = url.slice(1);
   }
 
-  const endpointUrl = `${apiBaseUrl}/${url}`;
+  const endpointUrl = `${configs.apiBaseUrl}/${url}`;
 
   const fetchData = useCallback(async () => {
     setIsPending(true);
