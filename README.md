@@ -41,5 +41,7 @@ pnpm install react-hook-form
 pnpm add @mui/material @emotion/react @emotion/styled
 pnpm add @fontsource/roboto
 pnpm add @mui/icons-material
+
+pnpm i @reduxjs/toolkit react-redux redux-saga 
 ```
 
