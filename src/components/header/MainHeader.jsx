@@ -12,7 +12,7 @@ const MainHeader = () => {
 
   useEffect(() => {
     setUser(authService.getCurrentUser());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);  
 
   const handleLogOutClick = async () => {
     await authService.logOut();

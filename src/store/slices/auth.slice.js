@@ -6,7 +6,7 @@ const authInitialState = {
     isLoggedIn: false,
     error: '',
     user: null,
-  }
+  },
 };
 
 const authSlice = createSlice({
@@ -30,8 +30,8 @@ const authSlice = createSlice({
       state.auth.isLoggedIn = false;
       state.auth.error = error;
       state.auth.user = null;
-    }
-  }
+    },
+  },
 });
 
 export const {

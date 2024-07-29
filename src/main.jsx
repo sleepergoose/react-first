@@ -9,7 +9,10 @@ import store from './store/store.js';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />
+      <RouterProvider
+        router={router}
+        fallbackElement={<p>Initial Load...</p>}
+      />
     </Provider>
   </React.StrictMode>
 );

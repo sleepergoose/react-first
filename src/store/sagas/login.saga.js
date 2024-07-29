@@ -8,10 +8,10 @@ import authService from '../../services/auth.service.js';
 
 function* loginWorker({ payload }) {
   try {
-    const response = yield call(authService.signIn({
+    const response = yield call(authService.signIn, {
       email: payload.email,
       password: payload.password,
-    }));
+    });
 
     yield put(loginUserSuccessAction(response));
   } catch (error) {

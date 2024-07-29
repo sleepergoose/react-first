@@ -1,16 +1,16 @@
 import './LoginPage.css';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import authService from '../../services/auth.service.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserAction } from '../../store/slices/auth.slice.js';
 
 const LoginPage = () => {
+  const { isLoading, isLoggedIn, error } = useSelector(
+    (store) => store?.auth?.auth
+  );
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [requestState, setRequestState] = useState({
-    isPending: false,
-    error: null,
-  });
 
   const { register, handleSubmit, getValues, formState } = useForm({
     reValidateMode: 'onBlur',
@@ -18,34 +18,21 @@ const LoginPage = () => {
   });
   const { errors, isSubmitting, isValid } = formState;
 
-  const onSubmit = async () => {
-    setRequestState({
-      isPending: true,
-      error: null,
-    });
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const onSubmit = async () => {
     const { email, password } = getValues();
 
-    try {
-      if (email && password) {
-        await authService.signIn({
-          email: email,
-          password: password,
-        });
-
-        setRequestState({
-          isPending: false,
-          error: null,
-        });
-
-        navigate('/');
-      }
-    } catch (error) {
-      setRequestState({
-        isPending: false,
-        error: error,
-      });
-    }
+    dispatch(
+      loginUserAction({
+        email: email,
+        password: password,
+      })
+    );
   };
 
   return (
@@ -71,6 +58,7 @@ const LoginPage = () => {
               name="email"
               className="form-control "
               placeholder="Email Address"
+              value={'peter@mail.com'}
               {...register('email', {
                 required: true,
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
@@ -93,6 +81,7 @@ const LoginPage = () => {
               name="password"
               className="form-control"
               placeholder="Password"
+              value={'123456789'}
               {...register('password', {
                 required: true,
                 minLength: 8,
@@ -105,8 +94,8 @@ const LoginPage = () => {
             )}
             {(errors?.password?.type === 'minLength' ||
               errors.password?.type === 'maxLength') && (
-                <span role="alert">Password must be 8 to 20 characters long</span>
-              )}
+              <span role="alert">Password must be 8 to 20 characters long</span>
+            )}
             {errors?.password?.type === 'pattern' && (
               <span role="alert">
                 Password may include only letters, digits and symbols !@#$%^&*+-
@@ -114,12 +103,12 @@ const LoginPage = () => {
             )}
           </div>
 
-          {requestState.isPending && (
+          {isLoading && (
             <button type="submit" disabled className="m-3 w-50 btn btn-primary">
               Signing in...
             </button>
           )}
-          {!requestState.isPending && (
+          {!isLoading && (
             <button
               type="submit"
               disabled={!isValid || isSubmitting}
@@ -129,10 +118,10 @@ const LoginPage = () => {
             </button>
           )}
 
-          {requestState.error && (
+          {error && (
             <div className="error-message">
               <h4>An error occurred during signing in flow.</h4>
-              <p>{requestState.error}</p>
+              <p>{error}</p>
             </div>
           )}
 
