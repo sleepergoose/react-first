@@ -1,17 +1,12 @@
 import './RegisterPage.css';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, Link } from 'react-router-dom';
-import AuthService from '../../services/auth.service.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { signupRequestAction } from '../../store/slices/signup.slice.js';
+import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
-  const authService = new AuthService();
-  const navigate = useNavigate();
-
-  const [requestState, setRequestState] = useState({
-    isPending: false,
-    error: null,
-  });
+  const dispatch = useDispatch();
+  const signupState = useSelector((store) => store?.signup);
 
   const { register, handleSubmit, getValues, formState } = useForm({
     reValidateMode: 'onBlur',
@@ -20,33 +15,16 @@ const RegisterPage = () => {
   const { errors, isSubmitting, isValid } = formState;
 
   const onSubmit = async () => {
-    setRequestState({
-      isPending: true,
-      error: null,
-    });
-
     const { name, email, password } = getValues();
 
-    try {
-      if (name && email && password) {
-        await authService.signUp({
+    if (name && email && password) {
+      dispatch(
+        signupRequestAction({
           name: name,
           email: email,
           password: password,
-        });
-
-        setRequestState({
-          isPending: false,
-          error: null,
-        });
-
-        navigate('/');
-      }
-    } catch (error) {
-      setRequestState({
-        isPending: false,
-        error: error,
-      });
+        })
+      );
     }
   };
 
@@ -140,12 +118,12 @@ const RegisterPage = () => {
             )}
           </div>
 
-          {requestState.isPending && (
+          {signupState?.isPending && (
             <button type="submit" disabled className="m-3 w-50 btn btn-primary">
               Registration...
             </button>
           )}
-          {!requestState.isPending && (
+          {!signupState?.isPending && (
             <button
               type="submit"
               className="m-3 w-50 btn btn-primary"
@@ -155,10 +133,10 @@ const RegisterPage = () => {
             </button>
           )}
 
-          {requestState.error && (
+          {signupState?.error && (
             <div className="error-message">
-              <h4>An error occurred during registration flow.</h4>
-              <p>{requestState.error}</p>
+              <p>An error occurred during registration flow.</p>
+              <p>{signupState?.error}</p>
             </div>
           )}
 

@@ -1,52 +1,29 @@
 import './LoginPage.css';
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import AuthService from '../../services/auth.service.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequestAction } from '../../store/slices/auth.slice.js';
 
 const LoginPage = () => {
-  const authService = new AuthService();
-  const navigate = useNavigate();
-
-  const [requestState, setRequestState] = useState({
-    isPending: false,
-    error: null,
-  });
+  const authState = useSelector((store) => store?.auth);
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, getValues, formState } = useForm({
     reValidateMode: 'onBlur',
     mode: 'all',
   });
+
   const { errors, isSubmitting, isValid } = formState;
 
   const onSubmit = async () => {
-    setRequestState({
-      isPending: true,
-      error: null,
-    });
-
     const { email, password } = getValues();
 
-    try {
-      if (email && password) {
-        await authService.signIn({
-          email: email,
-          password: password,
-        });
-
-        setRequestState({
-          isPending: false,
-          error: null,
-        });
-
-        navigate('/');
-      }
-    } catch (error) {
-      setRequestState({
-        isPending: false,
-        error: error,
-      });
-    }
+    dispatch(
+      loginRequestAction({
+        email: email,
+        password: password,
+      })
+    );
   };
 
   return (
@@ -72,6 +49,7 @@ const LoginPage = () => {
               name="email"
               className="form-control "
               placeholder="Email Address"
+              value={'peter@mail.com'}
               {...register('email', {
                 required: true,
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
@@ -94,6 +72,7 @@ const LoginPage = () => {
               name="password"
               className="form-control"
               placeholder="Password"
+              value={'123456789'}
               {...register('password', {
                 required: true,
                 minLength: 8,
@@ -115,12 +94,12 @@ const LoginPage = () => {
             )}
           </div>
 
-          {requestState.isPending && (
+          {authState?.isLoading && (
             <button type="submit" disabled className="m-3 w-50 btn btn-primary">
               Signing in...
             </button>
           )}
-          {!requestState.isPending && (
+          {!authState?.isLoading && (
             <button
               type="submit"
               disabled={!isValid || isSubmitting}
@@ -130,10 +109,10 @@ const LoginPage = () => {
             </button>
           )}
 
-          {requestState.error && (
+          {authState?.error && (
             <div className="error-message">
-              <h4>An error occurred during signing in flow.</h4>
-              <p>{requestState.error}</p>
+              <p>An error occurred during signing in flow.</p>
+              <p>{authState?.error}</p>
             </div>
           )}
 

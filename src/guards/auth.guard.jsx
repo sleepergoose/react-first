@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthService from '../services/auth.service';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AuthGuard = ({ component }) => {
-  const navigate = useNavigate();
-  const [authState, setAuthState] = useState(false);
-  const authService = new AuthService();
+  const authState = useSelector((store) => store?.auth);
 
-  useEffect(() => {
-    checkAuthState();
-  });
-
-  const checkAuthState = () => {
-    const state = authService.getAuthState();
-
-    if (!state) {
-      setAuthState(false);
-      navigate('/login');
-      return;
-    }
-
-    setAuthState(true);
-  };
-
-  return authState ? (
+  return authState?.isLoggedIn ? (
     <React.Fragment>{component}</React.Fragment>
   ) : (
-    <React.Fragment></React.Fragment>
+    <Navigate to={'/login'} />
   );
 };
 
