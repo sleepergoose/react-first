@@ -8,6 +8,7 @@ import AuthGuard from '../guards/auth.guard.jsx';
 import UnAuthGuard from '../guards/un-auth.guard.jsx';
 import AddProductPage from '../pages/products/add-page/AddProductPage.jsx';
 import ProductListPage from '../pages/products/list-page/ProductListPage.jsx';
+import RoleBasedGuard from '../guards/role-based.guard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,12 @@ const router = createBrowserRouter([
       },
       {
         path: '/products/add',
-        element: <AddProductPage />,
+        element: (
+          <RoleBasedGuard
+            requiredRole={'admin'}
+            component={<AddProductPage />}
+          />
+        ),
       },
     ],
   },

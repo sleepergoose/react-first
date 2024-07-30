@@ -5,8 +5,11 @@ import ListOutlined from '@mui/icons-material/ListOutlined';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import { useLocation } from 'react-router-dom';
 import MenuItemlink from '../manu-item-link/MenuItemLink';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
+  const authState = useSelector((store) => store?.auth);
+
   const location = useLocation();
 
   return (
@@ -25,10 +28,12 @@ const Sidebar = () => {
             <ListOutlined />
             Product List
           </MenuItemlink>
-          <MenuItemlink link={'/products/add'} pathname={location.pathname}>
-            <NoteAddOutlinedIcon />
-            Add Product
-          </MenuItemlink>
+          {authState?.user?.role === 'admin' && (
+            <MenuItemlink link={'/products/add'} pathname={location.pathname}>
+              <NoteAddOutlinedIcon />
+              Add Product
+            </MenuItemlink>
+          )}
         </ul>
       </div>
     </div>

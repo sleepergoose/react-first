@@ -49,7 +49,6 @@ const LoginPage = () => {
               name="email"
               className="form-control "
               placeholder="Email Address"
-              value={'peter@mail.com'}
               {...register('email', {
                 required: true,
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
@@ -72,7 +71,6 @@ const LoginPage = () => {
               name="password"
               className="form-control"
               placeholder="Password"
-              value={'123456789'}
               {...register('password', {
                 required: true,
                 minLength: 8,
