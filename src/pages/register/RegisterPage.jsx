@@ -74,7 +74,7 @@ const RegisterPage = () => {
               type="email"
               name="email"
               className="form-control "
-              placeholder="Email Address"
+              placeholder="Email"
               {...register('email', {
                 required: true,
                 pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
